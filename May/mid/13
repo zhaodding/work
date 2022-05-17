@@ -1,0 +1,52 @@
+jvm.options,logstash.conf,pcp-template.json,start.sh,t_cad_part.sql,t_compare.sql,t_e_part.sql,t_issue.sql,t_node.sql
+jvm.options,logstash.conf,pcp-template.json,start.sh,t_cad_part.sql,t_e_part.sql,t_issue.sql,t_node.sql
+
+logstash / 配置
+
+应用环境   服务  文件名
+
+
+61.160.250.211:5443
+zhaoding
+
+---5.14---
+
+
+问题：
+1，grama-uat caa-plugin是否包括172.20.103.4主机，path与另外一个不同
+2，确认upower prd环境的agentadmin路径：/data/devops/front/upower/pcp-client
+
+
+
+
+
+upower-prd
+E:\\pcp\\jt-client-server\\qa\\
+C:\\jt\\jt_client_server\\qa\\
+C:\\pcp-batch-server\\CAA\\CATIAWorkSpace\\
+C:\\pcp-batch-server\\CAA\\CATIAWorkSpace\\
+
+grama
+uat:
+caa   172.20.102.55   D:\\software\\
+agentadmin  172.20.102.55  10.164.9.239  /data/devops/front/pcp-client/
+doc-transfer  无
+jt-client-pdf   172.20.103.3  C:\\jt\\jt_client_server\\qa\\
+jt-client-pdf-jar  172.20.103.3  C:\\jt\\jt_client_server\\qa\\
+pcp-batch-server  172.20.103.4   C:\\pcp-batch-server\\CAA\\plugin\\
+pcp-batch-server-config  172.20.103.4  C:\\pcp-batch-server\\  C:\\pcp-batch-server\\CAA\\CATIAWorkSpace\\
+pcp-batch-server-jar  172.20.103.4  C:\\pcp-batch-server\\
+
+prd:
+caa   10.164.9.131  D:\\software\\
+agentadmin  10.164.9.131 10.164.9.46,10.164.9.47  /data/devops/front/pcp-client
+doc-transfer  无
+jt-client-pdf  10.164.9.208  C:\\jt-software-all\\jt-client-install\\jt_client_server\\qa\\
+jt-client-pdf-jar  10.164.9.208  C:\\jt-software-all\\jt-client-install\\jt_client_server\\qa\\
+pcp-batch-server  10.164.9.209  C:\\pcp-batch-server\\CAA\\plugin\\
+pcp-batch-server-config  10.164.9.209  C:\\pcp-batch-server\\  C:\\pcp-batch-server\\CAA\\CATIAWorkSpace\\
+pcp-batch-server-jar  10.164.9.209  C:\\pcp-batch-server\\
+
+deploy填入格式：win_b64_V2.35.6_B30.zip
+
+添加配置文件：doc-transfer、jt-client-pdf、pcp-batch-server

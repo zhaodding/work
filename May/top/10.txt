@@ -1,0 +1,50 @@
+pvc配置
+
+pcp-file
+pcp-file-hefei
+pdf-service
+[root@t-czhtc-mq-k8s-master-01 ~]# kubectl get pvc -n pcp-qa
+[root@t-czhtc-mq-k8s-master-01 ~]# kubectl get sc -n pcp-qa
+[root@t-czhtc-mq-k8s-master-01 ~]# kubectl edit deploy pcp-file -n pcp-qa     // 查看挂载路径
+[root@t-czhtc-mq-k8s-master-01 ~]# kubectl edit pvc pcp-file -n pcp-qa       //查看大小和类型
+
+
+
+dev
+pcp-file       10G
+pcp-file-hefei 1Gi
+pdf            1G  nfs-sas
+
+qa
+pcp-file       10G
+pcp-file-hefei 2Gi
+pdf            1G  nfs-sas
+
+https://jenkins.agilines.com/job/devops-init-deploy-node/
+
+[Host]> 10.50.30.3
+[root@p-czhtc-mq-k8s-master-01 ~]# kubectl get pods -n devops-system -o wide|grep jenkins
+[root@p-czhtc-mq-k8s-master-01 ~]# kubectl exec -it -n devops-system jenkins-master-6599b6448c-vwnzg /bin/bash
+cd /var/jenkins_home/
+
+ansible-playbook -i hosts -e server=init -e disk=${disk} -e mount=${mount} -e dilatation=${dilatation} -e init_ntp=${init_ntp} -e ntp_server=${ntp_server} -e ansible_ssh_user=${ansible_ssh_user} -e ansible_ssh_pass=${ansible_ssh_pass} os.yml
+
+
+- name: make directory
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0775
+  with_items:
+    - /opt/tools
+    - /data/docker
+    - /etc/docker
+
+ file:
+ 7         path: "{{ item }}"
+ 8         state: directory
+ 9       with_items:
+10         - /etc/nginx/sites-available
+11         - /etc/nginx/sites-enabled

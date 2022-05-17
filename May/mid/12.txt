@@ -1,0 +1,29 @@
+1、初始化git提交路径（k8s还是）
+2、Windows服务日志怎么查看？
+
+
+poc  devops
+dev qa测试的的主机上  t-czhtc-mq-k8s-master-01
+
+
+pcp-backend
+harbor.agilines.com/pcp-prd/pcp-biz-biz-all:R2.15.4
+
+ladder-server
+mq-externals
+neo4j-poc
+oms-portal
+pcp-mail
+pcp-portal-front
+
+
+
+poc  pcp-portal-front
+dev都有  qa不全有
+
+[root@t-sh-refire-pcp-k8smaster-01 os]# ansible-playbook -i hosts -e server=192.168.40.182 -e disk=false -e mount=false -e dilatation=false -e init_ntp=false os.yml
+
+
+pcp-oc-engine:压缩包是否添加到配置文件
+
+upower windows密码：iThinkDT.com

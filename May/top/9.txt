@@ -1,0 +1,19 @@
+1、jt-client  变更
+链接：https://agilines.feishu.cn/docs/doccnFg1CeDoXY5rBPhaulpyb2g
+主机：10.50.60.30
+密码：Awsdf@1234
+
+
+本周工作
+
+本周的四个发版   想都跟一下吧   重点 看一下关于Windows的方面的还有查看错误日志
+    问题解决过程
+雨燕平台 配置文件  协助海昊backup  也在写工具
+跟进下告警的工作   梳理主要工作
+关于Windows 的几个文档  准备梳理整理一下
+Linux初始化的工作  测试完成   close掉
+
+nobo mysql连接
+ssh连接：10.42.6.201 root    !QAZ2wsx#EDC
+
+ansible-playbook -i hosts -e server=init -e disk=${disk} -e mount=${mount} -e dilatation=${dilatation} -e ansible_ssh_user=${ansible_ssh_user} -e ansible_ssh_pass=${ansible_ssh_pass} all.yml

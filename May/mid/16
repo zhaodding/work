@@ -1,0 +1,50 @@
+t-czhtc-mq-pcp-nginx-01 10.50.30.15  40
+p-czhtc-mq-pcp-nginx-03 10.50.30.52  150   40 sda
+p-czhtc-mq-pcp-nginx-04 10.50.30.53  150   40 sda
+
+
+p-czhtc-mq-pcp-nginx-03  10.50.30.52
+p-czhtc-mq-pcp-nginx-04  10.50.30.53
+t-czhtc-mq-pcp-nginx-01  10.50.60.49
+p-czhtc-mq-k8s-node-11   10.50.30.54
+
+t-czhtc-mq-pcp-nginx-01 ansible_ssh_host=10.50.60.49
+p-czhtc-mq-pcp-nginx-03 ansible_ssh_host=10.50.30.52
+p-czhtc-mq-pcp-nginx-04 ansible_ssh_host=10.50.30.53
+p-czhtc-mq-k8s-node-11 ansible_ssh_host=10.50.30.54
+
+
+init_docker
+
+partprobe
+
+parted /dev/sda
+mkpart
+extended
+partx -a /dev/sda3
+cat /proc/partitions
+
+
+诺博，upower、前晨
+
+
+job：create-service-job
+service_name:pcp-library-front
+namespace:nobo-uat
+app_project:nobo
+app_env:uat
+
+job:change-config
+pcp-library-front-nobo-uat-config
+pcp-library-front-nobo-uat-deploy
+
+project:nobo
+
+pcp-library-nobo-uat-config
+pcp-library-nobo-uat-deploy
+
+oms-bus / 配置   start.sh   java需要时候
+
+gateway2
+
+
