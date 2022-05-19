@@ -1,0 +1,52 @@
+# @description: Deployment配置模板，针对无状态的服务（如Java Web应用，Nginx等），
+#  推荐使用Deployment方式部署；
+# @author:aa
+kind: Deployment
+apiVersion: apps/v1
+
+# Deployment元信息
+metadata:
+  name: app-web # 替换为您自己的deployment名称，名称不能使用下划线；
+  namespace: default
+  labels:
+    k8s-app: app-web # deployment标签，k-v格式，可以设置多个；
+
+# Deployment管理的Pod信息
+spec:
+  replicas: 1 # 部署的应用服务数量；
+  revisionHistoryLimit: 5 # rs历史版本保留数量；
+  selector:
+    matchLabels:
+      k8s-app: app-web # Pod选择器，该Deployment管理哪些Pod；
+  template:
+    metadata:
+      name: app-web # Pod名称，名称不能使用下划线；
+      labels:
+        k8s-app: app-web # pod标签，k-v格式，可以设置多个，上层Deployment、StatefulSet根据该值选择相应的Pod；
+    spec:
+      containers:
+        - name: app-web # 容器名称，名称不能使用下划线；
+          image: 'harbor.dcos.guangz.unic.local/gd-gis/app-web:1.1' # 容器镜像信息；
+          imagePullPolicy: Always # 镜像拉取策略；
+          # 容器资源设置；
+          resources:
+            # k8s调度Pod时使用requests设置的资源需求计算；
+            requests:
+              memory: "64Mi" # 容器可使用的内存资源，单位byte，支持的单位：Ei、Pi、Ti、Gi、Mi、Ki；
+              cpu: "250m" # 容器使用的CPU资源，单位个，250m代表该容器需要250/1000=0.25个CPU；
+            # 设置Cgroups时使用limits值计算，推荐requests和limits保持一致；
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          # 容器健康检查（可选配置，借助spring boot actuator实现，P.S.K8S默认健康检查机制为检查容器是否处于running状态，可能不能反应出应用真实的运行状态）；
+          livenessProbe:
+            httpGet:
+              path: "/actuator/health"
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 60 # 容器启动120秒之后开始第一次健康检查，配置合理的时间，确保服务成功启动；
+            periodSeconds: 20 # 每个20秒执行一次健康检查
+            timeoutSeconds: 3 # 超时时间，3秒
+            successThreshold: 1 # 成功一次，代表容器健康；
+            failureThreshold: 5 # 连续失败五次，代表容器运行异常，会导致Pod自动重启；
+      restartPolicy: Always # Pod重启策略；

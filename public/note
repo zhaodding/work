@@ -1,4 +1,77 @@
 
 
-newrizon
+newrizon（前晨）
 uat  devops@10.0.48.29   ns:uat
+
+
+upower
+uat  u-czhtc-upower-k8s-master-01@10.164.9.230   ns:upower-uat
+nginx 10.164.9.239
+
+refire（重塑）
+10.50.30.50   Awsdf@1234   VPN
+
+
+
+
+
+
+
+
+
+
+grammer
+uat:
+caa   172.20.102.55   D:\\software\\
+agentadmin  172.20.102.55  10.164.9.239  /data/devops/front/pcp-client/
+doc-transfer  无
+jt-client-pdf   172.20.103.3  C:\\jt\\jt_client_server\\qa\\
+jt-client-pdf-jar  172.20.103.3  C:\\jt\\jt_client_server\\qa\\
+pcp-batch-server  172.20.103.4   C:\\pcp-batch-server\\CAA\\plugin\\
+pcp-batch-server-config  172.20.103.4  C:\\pcp-batch-server\\  C:\\pcp-batch-server\\CAA\\CATIAWorkSpace\\
+pcp-batch-server-jar  172.20.103.4  C:\\pcp-batch-server\\
+
+prd:
+caa   10.164.9.131  D:\\software\\
+agentadmin  10.164.9.131 10.164.9.46,10.164.9.47  /data/devops/front/pcp-client
+doc-transfer  无
+jt-client-pdf  10.164.9.208  C:\\jt-software-all\\jt-client-install\\jt_client_server\\qa\\
+jt-client-pdf-jar  10.164.9.208  C:\\jt-software-all\\jt-client-install\\jt_client_server\\qa\\
+pcp-batch-server  10.164.9.209  C:\\pcp-batch-server\\CAA\\plugin\\
+pcp-batch-server-config  10.164.9.209  C:\\pcp-batch-server\\  C:\\pcp-batch-server\\CAA\\CATIAWorkSpace\\
+pcp-batch-server-jar  10.164.9.209  C:\\pcp-batch-server\\
+
+
+
+
+echo $Joblist
+for jobname in $Joblist
+do
+    if [ -f config.xml ];then
+      rm -rf config.xml
+    fi
+
+    curl -X GET -u $Jenkins_user:$Jenkins_token https://jenkins.agilines.com/job/$jobname/config.xml -o config.xml
+
+        sed -i s,"env:uat","project:pcp",g config.xml
+        sed -i s,"env:uat","env:refire-uat",g config.xml
+       #sed -i s,"env:uat","project:uat",g config.xml
+       #sed -i '/db_type/{n;d}' config.xml
+       #sed -i '/<\/parameterDefinitions>/i\        <hudson.model.StringParameterDefinition>\n          <name>cloud_target_version</name>\n          <defaultValue/>\n          <trim>false</trim>\n        </hudson.model.StringParameterDefinition' config.xml
+       #sed -i '/db_type/i\          <defaultValue>mysql</defaultValue>' config.xml
+       #sed -i '/<parameterDefinitions>/a\        <hudson.model.StringParameterDefinition>\n          <name>general_tag</name>\n          <defaultValue/>\n          <trim>false</trim>\n        </hudson.model.StringParameterDefinition>' config.xml
+	   #sed -i s,"<name>gradle</name>","<name>gradle_version</name>",g config.xml
+       #sed -i s,"python3","test_agent",g config.xml
+       #sed -i s,"cloud/upower","general",g config.xml
+       #sed -i s,"/prd","/qa",g config.xml
+       #sed -i '/<parameterDefinitions>/a\        <hudson.model.ChoiceParameterDefinition>\n          <name>sql_type</name>\n          <description>选择想要执行的sql类型，有三个选项\ngeneral                       执行通用sql\ncloud                          执行定制化sql\nboth                           执行通用sql加上定制化sql</description>\n          <choices class="java.util.Arrays$ArrayList">\n            <a class="string-array">\n              <string></string>\n              <string>general</string>\n              <string>cloud</string>\n              <string>both</string>\n            </a>\n          </choices>\n        </hudson.model.ChoiceParameterDefinition>' config.xml
+       #sed -i '/<parameterDefinitions>/a\        <hudson.model.ChoiceParameterDefinition>\n          <name>sql_type</name>\n          <description>选择想要执行的sql类型，有三个选项\ngeneral                       执行通用sql\ncloud                          执行定制化sql\nboth                           执行通用sql加上定制化sql</description>\n          <choices class="java.util.Arrays$ArrayList">\n            <a class="string-array">\n              <string></string>\n              <string>general</string>\n              <string>cloud</string>\n              <string>both</string>\n            </a>\n          </choices>\n        </hudson.model.ChoiceParameterDefinition>' config.xml
+       #sed -i '/<parameterDefinitions>/a\        <hudson.model.ChoiceParameterDefinition>\n          <name>sql_type</name>\n          <choices class="java.util.Arrays$ArrayList">\n            <a class="string-array">\n              <string></string>\n              <string>general</string>\n              <string>cloud</string>\n              <string>both</string>\n            </a>\n          </choices>\n        </hudson.model.ChoiceParameterDefinition>' config.xml
+       #sed -i '/<parameterDefinitions>/a\        <hudson.model.StringParameterDefinition>\n          <name>agent</name>\n          <defaultValue>VPN-JUMP</defaultValue>\n          <trim>false</trim>\n        </hudson.model.StringParameterDefinition>' config.xml
+       #sed -i "/<name>version<\/name>/{n;s#<defaultValue/>#<defaultValue>harbor.agilines.com/prepcp/${jobname%-prepcp-oldplm-deploy*}:stable</defaultValue>#;}" config.xml
+       #sed -i '/config_git_branch/{n;s/master/dev-qa/;}' config.xml
+       cat config.xml
+
+       curl -X POST -u $Jenkins_user:$Jenkins_token -H "Content-Type: application/xml" https://jenkins.agilines.com/job/$jobname/config.xml --data-binary "@config.xml"
+
+done

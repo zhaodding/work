@@ -1,0 +1,12 @@
+
+
+编写脚本安排所有服务巡检；@海昊 @赵鼎 【客户/环境/应用名/JVM配置/PodLimit】
+
+
+[prepcp]
+t-czhtc-mq-prepcp-db-01 ansible_ssh_host=10.50.60.50
+t-czhtc-mq-prepcp-app-01 ansible_ssh_host=10.50.60.51
+
+
+
+json=${kubectl -n ke-dev get deployment centos-test -o json}

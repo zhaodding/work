@@ -1,0 +1,21 @@
+
+CorpId： ding3188b88ac84d7f1135c2f4657eb6378f
+agentID：1524025975
+
+
+[root@iZhp30cjzsoxf7l8dndz0vZ ~]# cat /var/lib/jenkins/secrets/initialAdminPassword
+
+
+#0511发布总结（CTS已知的一些问题）
+1) 所有服务的JVM参数配置，哪些服务需要给到多少；@陈国 跟架构组沟通
+2）oms-social在雨燕内存配置过小，编写脚本安排所有服务巡检；@海昊 @赵鼎 【客户/环境/应用名/JVM配置/PodLimit】
+3）jt-client黑窗被选中，服务被block；@陈国
+4）pcp-library application配置文件错误 + start.sh配置不完整 + Nginx配置；@海昊 @赵鼎
+5）PrintPDF应用日志文件过大；@杨冬
+6）VPN连接失败问题+Mongo部署需要前置；
+7）Jenkins Job没有提前ready；
+
+#实验室发布总结（CTS已知的一些问题）
+1）物料准备不充分，上海这边开发不熟悉；
+
+

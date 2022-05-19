@@ -1,0 +1,40 @@
+
+# 部署类型为 Deployment；
+kind: Deployment
+apiVersion: apps/v1
+
+metadata:
+  name: centos-test
+  # 名称空间；
+  namespace: default
+  labels:
+    k8s-app: centos-test
+spec:
+  # 运行容器数量；
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: centos-test
+  template:
+    metadata:
+      name: centos-test
+      labels:
+        k8s-app: centos-test
+    spec:
+      containers:
+      # 运行容器名称；
+      - name: centos-test
+        # 镜像地址，注意必须使用天宫 CCR 镜像仓库地址；
+        image: 'harbor.dcos.guangz.unic.local/common/centos-7.6:tools'
+        command: ["/bin/bash", "-ce", "tail -f /dev/null"]
+        # 镜像拉取策略：Always、IfNotPresent、Never；
+        imagePullPolicy: Always
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "200m"
+          limits:
+            memory: "512Mi"
+            cpu: "200m"
+    # 容器重启策略：Always、OnFailure、Never
+    restartPolicy: Always

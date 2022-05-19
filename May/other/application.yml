@@ -1,0 +1,335 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "8"
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"app":"oms-bus"},"name":"oms-bus","namespace":"nobo-uat"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"oms-bus"}},"template":{"metadata":{"labels":{"app":"oms-bus"}},"spec":{"affinity":{"nodeAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":{"nodeSelectorTerms":[{"matchExpressions":[{"key":"env","operator":"In","values":["nobo-uat"]}]}]}}},"containers":[{"args":["cd /opt;exec sh start.sh"],"command":["/bin/sh","-c"],"image":"harbor.agilines.com/pcp-prd/oms-bus:R2.18.0","imagePullPolicy":"Always","livenessProbe":{"failureThreshold":3,"httpGet":{"path":"/health","port":8080,"scheme":"HTTP"},"initialDelaySeconds":70,"periodSeconds":10,"successThreshold":1,"timeoutSeconds":10},"name":"oms-bus","ports":[{"containerPort":8080}],"readinessProbe":{"failureThreshold":3,"httpGet":{"path":"/health","port":8080,"scheme":"HTTP"},"initialDelaySeconds":60,"periodSeconds":10,"successThreshold":3,"timeoutSeconds":10},"resources":{"limits":{"cpu":"1","memory":"1408Mi"},"requests":{"cpu":"100m","memory":"1408Mi"}},"volumeMounts":[{"mountPath":"/opt/application-qa.yml","name":"oms-bus-1","subPath":"application-qa.yml"},{"mountPath":"/opt/logback-spring.xml","name":"oms-bus-2","subPath":"logback-spring.xml"},{"mountPath":"/opt/start.sh","name":"oms-bus-3","subPath":"start.sh"}],"workingDir":"/opt"}],"dnsPolicy":"ClusterFirst","imagePullSecrets":[{"name":"harbor"}],"volumes":[{"configMap":{"items":[{"key":"application-qa.yml","path":"application-qa.yml"}],"name":"oms-bus"},"name":"oms-bus-1"},{"configMap":{"items":[{"key":"logback-spring.xml","path":"logback-spring.xml"}],"name":"oms-bus"},"name":"oms-bus-2"},{"configMap":{"items":[{"key":"start.sh","path":"start.sh"}],"name":"oms-bus"},"name":"oms-bus-3"}]}}}}
+  creationTimestamp: "2022-03-16T03:01:25Z"
+  generation: 8
+  labels:
+    app: oms-bus
+  managedFields:
+  - apiVersion: apps/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          .: {}
+          f:kubectl.kubernetes.io/last-applied-configuration: {}
+        f:labels:
+          .: {}
+          f:app: {}
+      f:spec:
+        f:progressDeadlineSeconds: {}
+        f:replicas: {}
+        f:revisionHistoryLimit: {}
+        f:selector:
+          f:matchLabels:
+            .: {}
+            f:app: {}
+        f:strategy:
+          f:rollingUpdate:
+            .: {}
+            f:maxSurge: {}
+            f:maxUnavailable: {}
+          f:type: {}
+        f:template:
+          f:metadata:
+            f:labels:
+              .: {}
+              f:app: {}
+          f:spec:
+            f:affinity:
+              .: {}
+              f:nodeAffinity:
+                .: {}
+                f:requiredDuringSchedulingIgnoredDuringExecution:
+                  .: {}
+                  f:nodeSelectorTerms: {}
+            f:containers:
+              k:{"name":"oms-bus"}:
+                .: {}
+                f:args: {}
+                f:command: {}
+                f:image: {}
+                f:imagePullPolicy: {}
+                f:livenessProbe:
+                  .: {}
+                  f:failureThreshold: {}
+                  f:httpGet:
+                    .: {}
+                    f:path: {}
+                    f:port: {}
+                    f:scheme: {}
+                  f:initialDelaySeconds: {}
+                  f:periodSeconds: {}
+                  f:successThreshold: {}
+                  f:timeoutSeconds: {}
+                f:name: {}
+                f:ports:
+                  .: {}
+                  k:{"containerPort":8080,"protocol":"TCP"}:
+                    .: {}
+                    f:containerPort: {}
+                    f:protocol: {}
+                f:readinessProbe:
+                  .: {}
+                  f:failureThreshold: {}
+                  f:httpGet:
+                    .: {}
+                    f:path: {}
+                    f:port: {}
+                    f:scheme: {}
+                  f:initialDelaySeconds: {}
+                  f:periodSeconds: {}
+                  f:successThreshold: {}
+                  f:timeoutSeconds: {}
+                f:resources:
+                  .: {}
+                  f:limits:
+                    .: {}
+                    f:cpu: {}
+                    f:memory: {}
+                  f:requests:
+                    .: {}
+                    f:cpu: {}
+                    f:memory: {}
+                f:terminationMessagePath: {}
+                f:terminationMessagePolicy: {}
+                f:volumeMounts:
+                  .: {}
+                  k:{"mountPath":"/opt/application-qa.yml"}:
+                    .: {}
+                    f:mountPath: {}
+                    f:name: {}
+                    f:subPath: {}
+                  k:{"mountPath":"/opt/logback-spring.xml"}:
+                    .: {}
+                    f:mountPath: {}
+                    f:name: {}
+                    f:subPath: {}
+                  k:{"mountPath":"/opt/start.sh"}:
+                    .: {}
+                    f:mountPath: {}
+                    f:name: {}
+                    f:subPath: {}
+                f:workingDir: {}
+            f:dnsPolicy: {}
+            f:imagePullSecrets:
+              .: {}
+              k:{"name":"harbor"}:
+                .: {}
+                f:name: {}
+            f:restartPolicy: {}
+            f:schedulerName: {}
+            f:securityContext: {}
+            f:terminationGracePeriodSeconds: {}
+            f:volumes:
+              .: {}
+              k:{"name":"oms-bus-1"}:
+                .: {}
+                f:configMap:
+                  .: {}
+                  f:defaultMode: {}
+                  f:items: {}
+                  f:name: {}
+                f:name: {}
+              k:{"name":"oms-bus-2"}:
+                .: {}
+                f:configMap:
+                  .: {}
+                  f:defaultMode: {}
+                  f:items: {}
+                  f:name: {}
+                f:name: {}
+              k:{"name":"oms-bus-3"}:
+                .: {}
+                f:configMap:
+                  .: {}
+                  f:defaultMode: {}
+                  f:items: {}
+                  f:name: {}
+                f:name: {}
+    manager: kubectl-client-side-apply
+    operation: Update
+    time: "2022-03-16T03:01:25Z"
+  - apiVersion: apps/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:spec:
+        f:template:
+          f:metadata:
+            f:annotations:
+              .: {}
+              f:kubectl.kubernetes.io/restartedAt: {}
+    manager: kubectl-rollout
+    operation: Update
+    time: "2022-03-16T09:19:22Z"
+  - apiVersion: apps/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          f:deployment.kubernetes.io/revision: {}
+      f:status:
+        f:availableReplicas: {}
+        f:conditions:
+          .: {}
+          k:{"type":"Available"}:
+            .: {}
+            f:lastTransitionTime: {}
+            f:lastUpdateTime: {}
+            f:message: {}
+            f:reason: {}
+            f:status: {}
+            f:type: {}
+          k:{"type":"Progressing"}:
+            .: {}
+            f:lastTransitionTime: {}
+            f:lastUpdateTime: {}
+            f:message: {}
+            f:reason: {}
+            f:status: {}
+            f:type: {}
+        f:observedGeneration: {}
+        f:readyReplicas: {}
+        f:replicas: {}
+        f:updatedReplicas: {}
+    manager: kube-controller-manager
+    operation: Update
+    time: "2022-05-18T03:24:55Z"
+  name: oms-bus
+  namespace: nobo-uat
+  resourceVersion: "22390921"
+  selfLink: /apis/apps/v1/namespaces/nobo-uat/deployments/oms-bus
+  uid: ef9cc16b-b457-4e55-8d16-8584d9deba31
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: oms-bus
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        kubectl.kubernetes.io/restartedAt: "2022-05-18T11:23:29+08:00"
+      creationTimestamp: null
+      labels:
+        app: oms-bus
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: env
+                operator: In
+                values:
+                - nobo-uat
+      containers:
+      - args:
+        - cd /opt;exec sh start.sh
+        command:
+        - /bin/sh
+        - -c
+        image: harbor.agilines.com/pcp-prd/oms-bus:R2.18.0
+        imagePullPolicy: Always
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /health
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 70
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 10
+        name: oms-bus
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /health
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 60
+          periodSeconds: 10
+          successThreshold: 3
+          timeoutSeconds: 10
+        resources:
+          limits:
+            cpu: "1"
+            memory: 1408Mi
+          requests:
+            cpu: 100m
+            memory: 1408Mi
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /opt/application-qa.yml
+          name: oms-bus-1
+          subPath: application-qa.yml
+        - mountPath: /opt/logback-spring.xml
+          name: oms-bus-2
+          subPath: logback-spring.xml
+        - mountPath: /opt/start.sh
+          name: oms-bus-3
+          subPath: start.sh
+        workingDir: /opt
+      dnsPolicy: ClusterFirst
+      imagePullSecrets:
+      - name: harbor
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - configMap:
+          defaultMode: 420
+          items:
+          - key: application-qa.yml
+            path: application-qa.yml
+          name: oms-bus
+        name: oms-bus-1
+      - configMap:
+          defaultMode: 420
+          items:
+          - key: logback-spring.xml
+            path: logback-spring.xml
+          name: oms-bus
+        name: oms-bus-2
+      - configMap:
+          defaultMode: 420
+          items:
+          - key: start.sh
+            path: start.sh
+          name: oms-bus
+        name: oms-bus-3
+status:
+  availableReplicas: 1
+  conditions:
+  - lastTransitionTime: "2022-05-17T07:28:53Z"
+    lastUpdateTime: "2022-05-17T07:28:53Z"
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  - lastTransitionTime: "2022-03-16T03:01:25Z"
+    lastUpdateTime: "2022-05-18T03:24:55Z"
+    message: ReplicaSet "oms-bus-78d9c87b6d" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  observedGeneration: 8
+  readyReplicas: 1
+  replicas: 1
+  updatedReplicas: 1

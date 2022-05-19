@@ -1,0 +1,4 @@
+#!/bin/sh
+cp agent.config /usr/local/skywalking-agent/config/agent.config
+exec java -javaagent:/usr/local/skywalking-agent/skywalking-agent.jar -Dskywalking.agent.service_name=nobo-pcp-oc-service-uat
+ -Dskywalking.collector.backend_service=10.42.6.208:33001 -Djava.security.egd=file:/dev/./urandom -Duser.timezone=GMT+08 -Xms1024m -Xmx1024m -jar /opt/app.jar --server.port=8080 --spring.profiles.active=prd --logging.config=/opt/logback-spring.xml --spring.config.location=application-prd.yml

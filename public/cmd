@@ -1,0 +1,11 @@
+
+
+kubectl exec -it -n upower-uat pcp-common-78f4d94fb7-khxcz -- bash  # 进入容器
+
+kubectl logs -p pcp-gateway2-855778cb87-cpdnv -n upower-uat    # 查看日志
+
+kubectl -n nobo-uat get deployment oms-bus -o yaml             # 获取deploy信息
+
+kubectl -n nobo-uat rollout restart deployment oms-bus      # 重启服务
+
+kubectl delete deploy pcp-mobile -n nobo-uat               # 删除服务   Jenkins

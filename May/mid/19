@@ -1,0 +1,187 @@
+
+
+现在对于发布的整体过程，你这边还存在什么盲区吗？
+你先梳理下现在的整体发布的流程，然后我们1 on 1过一下，你现在还有哪些盲区，后面会有其他事情交给你。
+
+
+发布的整个过程
+设计到前后端  Linux、windows的发版比较清楚   后期的验证、测试流程不太清楚  以及涉及到的对应人
+一些服务使用的域名端口 不清楚   比如像eureka\mongo等
+Windows有些服务  基本没问题  小的具体还需要梳理一下      jt-client   pdf  catia   batch-server  doc-transfer
+SQL那快比较薄弱  参与相对较少
+处理解决问题的能力还需要跟进一下  比较catia软件打不开等等
+
+
+[root@node root]# kubectl get pods --all-namespaces -o go-template --template='{{range.items}}{{.metadata.uid}}{{end}}'
+0313ffff-f1f4-11e7-9cda-40f2e9b98448
+ee49bdcd-f1f2-11e7-9cda-40f2e9b98448
+f1e0eb80-f1f2-11e7-9cda-40f2e9b98448
+
+重塑
+refire-uat
+refire-uat-sql
+
+
+job：create-service-job
+service_name:pcp-library-front
+namespace:refire-uat
+app_project:refire
+app_env:uat
+
+.*(.*refire-uat.*).*     # refire客户名
+
+job:change-config
+pcp-library-front-nobo-uat-config
+pcp-library-front-nobo-uat-deploy
+
+project:pcp
+env:refire-uat
+
+sed -i s,"project:pcp","env:refire-uat",g config.xml
+sed -i s,"env:refire-uat","project:pcp",g config.xml
+
+服务：
+ladder-client
+
+config
+  dev-qa -> master
+  agent VPN-JUMP
+
+
+deploy
+  */python3    */test_agent
+
+
+
+index
+backend
+
+
+
+
+change-config
+pcp-bom-front-refire-uat-config
+pcp-bom-front-refire-uat-deploy
+pcp-config-front-refire-uat-config
+pcp-config-front-refire-uat-deploy
+pcp-doc-front-refire-uat-config
+pcp-doc-front-refire-uat-deploy
+pcp-front-refire-uat-config
+pcp-front-refire-uat-deploy
+pcp-library-front-refire-uat-config
+pcp-library-front-refire-uat-deploy
+pcp-libs-front-refire-uat-config
+pcp-libs-front-refire-uat-deploy
+pcp-main-front-refire-uat-config
+pcp-main-front-refire-uat-deploy
+pcp-nc-front-refire-uat-config
+pcp-nc-front-refire-uat-deploy
+pcp-pmp-front-refire-uat-config
+pcp-pmp-front-refire-uat-deploy
+pcp-pmp-uniapp-front-refire-uat-config
+pcp-pmp-uniapp-front-refire-uat-deploy
+pcp-portal-front-refire-uat-config
+pcp-portal-front-refire-uat-deploy
+pcp-render-front-refire-uat-config
+pcp-render-front-refire-uat-deploy
+pcp-rules-front-refire-uat-config
+pcp-rules-front-refire-uat-deploy
+pcp-uc-front-refire-uat-config
+pcp-uc-front-refire-uat-deploy
+gateway-refire-uat-config
+gateway-refire-uat-deploy
+dingding-notification-refire-uat-config
+dingding-notification-refire-uat-deploy
+ladder-client-refire-uat-config
+ladder-client-refire-uat-deploy
+logstash-refire-uat-config
+logstash-refire-uat-deploy
+nc-mail-refire-uat-config
+nc-mail-refire-uat-deploy
+neo4j-refire-uat-config
+neo4j-refire-uat-deploy
+oms-bus-refire-uat-config
+oms-bus-refire-uat-deploy
+oms-comment-refire-uat-config
+oms-comment-refire-uat-deploy
+oms-feedback-refire-uat-config
+oms-feedback-refire-uat-deploy
+oms-history-refire-uat-config
+oms-history-refire-uat-deploy
+oms-social-refire-uat-config
+oms-social-refire-uat-deploy
+pcp-api-refire-uat-config
+pcp-api-refire-uat-deploy
+pcp-backend-refire-uat-config
+pcp-backend-refire-uat-deploy
+pcp-bom-backend-refire-uat-config
+pcp-bom-backend-refire-uat-deploy
+pcp-bpm-refire-uat-config
+pcp-bpm-refire-uat-deploy
+pcp-change-refire-uat-config
+pcp-change-refire-uat-deploy
+pcp-color-refire-uat-config
+pcp-color-refire-uat-deploy
+pcp-common-refire-uat-config
+pcp-common-refire-uat-deploy
+pcp-config-refire-uat-config
+pcp-config-refire-uat-deploy
+pcp-document-refire-uat-config
+pcp-document-refire-uat-deploy
+pcp-file-refire-uat-config
+pcp-file-refire-uat-deploy
+pcp-gateway-refire-uat-config
+pcp-gateway-refire-uat-deploy
+pcp-gateway2-refire-uat-config
+pcp-gateway2-refire-uat-deploy
+pcp-index-refire-uat-config
+pcp-index-refire-uat-deploy
+pcp-issue-refire-uat-config
+pcp-issue-refire-uat-deploy
+pcp-library-refire-uat-config
+pcp-library-refire-uat-deploy
+pcp-libs-refire-uat-config
+pcp-libs-refire-uat-deploy
+pcp-meeting-refire-uat-config
+pcp-meeting-refire-uat-deploy
+pcp-mobile-refire-uat-config
+pcp-mobile-refire-uat-deploy
+pcp-nc-refire-uat-config
+pcp-nc-refire-uat-deploy
+pcp-oc-engine-refire-uat-config
+pcp-oc-engine-refire-uat-deploy
+pcp-oc-service-refire-uat-config
+pcp-oc-service-refire-uat-deploy
+pcp-oc-website-refire-uat-config
+pcp-oc-website-refire-uat-deploy
+pcp-register-refire-uat-config
+pcp-register-refire-uat-deploy
+pcp-sso-refire-uat-config
+pcp-sso-refire-uat-deploy
+pcp-tag-refire-uat-config
+pcp-tag-refire-uat-deploy
+pcp-uc-refire-uat-config
+pcp-uc-refire-uat-deploy
+pcp-variant-refire-uat-config
+pcp-variant-refire-uat-deploy
+pdf-service-refire-uat-config
+pdf-service-refire-uat-deploy
+project-refire-uat-config
+project-refire-uat-deploy
+xxl-job-refire-uat-config
+xxl-job-refire-uat-deploy
+
+
+agilines_poc
+update swift_config_file_info
+set file_content = replace(file_content,'{{ mysql_password }}','MTIzNDU2Cg==')
+where scene_name like '%agilines_poc';
+
+update swift_config_file_info
+set file_content = replace(file_content,'{{ mysql_username }}','root')
+where scene_name like '%agilines_poc';
+
+
+pcp-index
+pcp-backend
+pcp-bom-backend
