@@ -1,0 +1,20 @@
+
+清理数据：
+
+DELETE
+FROM
+	feedback_center.t_feedback_center
+WHERE
+	tenant_id IN ( "60f51cdeab382d0001bbf41b" )
+	AND create_date BETWEEN "create_end_date"
+	AND "create_end_date";
+
+操作步骤：
+    1，查询数据：
+SELECT *
+FROM
+	feedback_center.t_feedback_center
+WHERE
+	tenant_id IN ( "60f51cdeab382d0001bbf41b" )
+	AND create_date BETWEEN "2022-03-19 20:50:00"
+	AND "2022-05-20 22:50:00";

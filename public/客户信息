@@ -1,0 +1,12 @@
+nobo（诺博）
+
+
+
+
+newrizon（前晨）
+       主机      name      ip         ns      nginx
+uat   devops    devops  10.0.48.29   uat    maddleware-3
+prd   devops    devops  10.0.48.29   qc
+
+
+

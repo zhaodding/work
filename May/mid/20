@@ -1,0 +1,93 @@
+
+upower
+down   待验证
+
+nobo uat
+agent-admin 没法
+
+newwrizon uat
+前后端发了    vpn应该没连
+
+
+nobo
+
+前晨 uat
+ nginx  1台  maddleware-3
+
+
+pcp-gateway2
+pcp-library-front
+pcp-library
+
+
+newrizon prd
+config
+namespace：qc
+config_env:prd
+project:newrizon
+config_git_branch:master
+
+deploy
+workload_affinity:project:qc
+app_env:prd
+
+
+pcp-gateway2-newrizon-prd-config
+pcp-gateway2-newrizon-prd-deploy
+
+
+pcp-library-front-newrizon-prd-config
+pcp-library-front-newrizon-prd-deploy
+pcp-library-newrizon-prd-config
+pcp-library-newrizon-prd-deploy
+
+
+
+pcp-library-front
+pcp-library
+
+
+
+
+
+
+
+
+
+
+harbor.agilines.com/pcp-prd/pcp-backend:R2.22.0
+harbor.agilines.com/pcp-prd/pcp-biz-biz-all:R2.15.4
+
+
+harbor.agilines.com/pcp-prd/pcp-bom-backend:R2.37.1
+harbor.agilines.com/pcp-prd/pcp-config:R2.37.0
+harbor.agilines.com/pcp-prd/pcp-change:R2.37.0
+harbor.agilines.com/pcp-prd/pcp-common:R2.37.0
+harbor.agilines.com/pcp-prd/oms-feedback:R2.37.0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -13,6 +13,9 @@ refire（重塑）
 
 
 
+nobo和前晨  agentadmin找客户装
+
+
 
 
 
@@ -53,7 +56,9 @@ do
 
     curl -X GET -u $Jenkins_user:$Jenkins_token https://jenkins.agilines.com/job/$jobname/config.xml -o config.xml
 
-        sed -i s,"env:uat","project:pcp",g config.xml
+        sed -i 'project:qc' config.xml
+        sed -i s,"env:prd,project:newrizon","project:qc",g config.xml
+        sed -i "env:uat","project:pcp",g config.xml
         sed -i s,"env:uat","env:refire-uat",g config.xml
        #sed -i s,"env:uat","project:uat",g config.xml
        #sed -i '/db_type/{n;d}' config.xml
@@ -75,3 +80,6 @@ do
        curl -X POST -u $Jenkins_user:$Jenkins_token -H "Content-Type: application/xml" https://jenkins.agilines.com/job/$jobname/config.xml --data-binary "@config.xml"
 
 done
+
+workload_affinity
+env:prd,project:newrizon   project:qc
