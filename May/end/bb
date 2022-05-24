@@ -1,0 +1,15 @@
+#!/bin/sh
+name="pcp-backend"
+env="prd"
+customer="upower"
+sky_option="-javaagent:/usr/local/skywalking-agent/skywalking-agent.jar -Dskywalking.agent.service_name=${name}-${customer}-$env -Dskywalking.collector.backend_service=10.50.30.201:33001"
+arthas_opthion="-javaagent:/opt/arthas-agent.jar -Darthas.tunnelServer=ws://10.50.60.201:33601/ws -Darthas.appName=${name}-${customer}-$env"
+jmx_option="-javaagent:/opt/jmx_prometheus_javaagent-0.14.0.jar=8888:/opt/jmx-config.yaml -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Djava.rmi.server.hostname=localhost -Dcom.sun.management.jmxremote.port=5555"
+jvm_option="-Xms2048M -Xmx2048M -XX:MaxMetaspaceSize=200M -XX:MetaspaceSize=200M -XX:MaxDirectMemorySize=256m -XX:+DisableExplicitGC -XX:+UseParNewGC -XX:+UseConcMarkSweepGC -XX:-ReduceInitialCardMarks -XX:CMSInitiatingOccupancyFraction=70 -XX:+PrintGCDetails -verbose:gc -XX:+PrintGCTimeStamps -XX:+PrintGCApplicationConcurrentTime -XX:+PrintHeapAtGC -Xloggc:/mnt/persistence/gc.log -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/mnt/persistence/HeapDumpOnOutMemoryError -XX:NativeMemoryTracking=detail"
+other_option="-Dloader.path=/opt/pcp-biz/pcp-biz.jar org.springframework.boot.loader.PropertiesLauncher  --spring.config.location=classpath:BOOT-INF/classes/application.yml --server.port=8080 --spring.profiles.active=$env --logging.config=/opt/logback-spring.xml"
+exec java $sky_option $jmx_option $jvm_option -Djava.security.egd=file:/dev/./urandom -Duser.timezone=GMT+08 -cp ./app.jar $other_option
+
+
+
+other_option="--server.port=8080 --spring.profiles.active=$env --logging.config=/opt/logback-spring.xml"
+exec java $sky_option $jmx_option $jvm_option $arthas_option -Djava.security.egd=file:/dev/./urandom -Duser.timezone=GMT+08 -cp /opt/app.jar -Dloader.path=pcp-biz/pcp-biz.jar org.springframework.boot.loader.PropertiesLauncher $other_option

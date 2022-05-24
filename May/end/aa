@@ -1,0 +1,12 @@
+#!/bin/sh
+#exec java -cp ./app.jar -Duser.timezone=GMT+08 -Dloader.path=pcp-biz/pcp-biz.jar org.springframework.boot.loader.PropertiesLauncher --server.port=8080 --spring.config.location=classpath:BOOT-INF/classes/application.yml -Xms2048m -Xmx2048m -XX:-OmitStackTraceInFastThrow --spring.profiles.active=prd --logging.config=/opt/logback-spring.xml
+exec java -javaagent:/usr/local/skywalking-agent/skywalking-agent.jar -Dskywalking.agent.service_name=mq-pcp-pcp-backend-poc -Dskywalking.collector.backend_service=skywalking-service.cn:33001 -Xms2048m -Xmx2048m -cp ./app.jar -Duser.timezone=GMT+08 -Dloader.path=/opt/pcp-biz/pcp-biz.jar org.springframework.boot.loader.PropertiesLauncher --server.port=8080 --spring.config.location=classpath:BOOT-INF/classes/application.yml --spring.profiles.active=prd --logging.config=/opt/logback-spring.xml
+
+
+#!/bin/sh
+#exec java -cp ./app.jar -Duser.timezone=GMT+08 -Dloader.path=pcp-biz/pcp-biz.jar org.springframework.boot.loader.PropertiesLauncher --server.port=8080 --spring.config.location=classpath:BOOT-INF/classes/application.yml -Xms2048m -Xmx2048m -XX:-OmitStackTraceInFastThrow --spring.profiles.active=prd --logging.config=/opt/logback-spring.xml
+exec -Dloader.path=/opt/pcp-biz/pcp-biz.jar org.springframework.boot.loader.PropertiesLauncher  --spring.config.location=classpath:BOOT-INF/classes/application.yml
+
+
+
+

@@ -1,0 +1,206 @@
+
+nobo uat
+
+pdf-service
+#!/bin/sh
+exec java  -cp /opt/app.jar -Duser.timezone=GMT+08 -Xms1024m -Xmx1024m -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/opt/dumpfile.hprof org.springframework.boot.loader.PropertiesLauncher --server.port=8080 --spring.config.location=classpath:BOOT-INF/classes/application-prd.yml --spring.profiles.active=prd --spring.application.name=pdf-service --logging.config=/opt/logback-spring.xml
+
+pcp-variant
+#!/bin/sh
+#sleep 40000
+exec java -Djava.security.egd=file:/dev/./urandom -Duser.timezone=GMT+08 -Xms1024m -Xmx1024m -jar /opt/app.jar --server.port=8080 --spring.profiles.active=qa --logging.config=/opt/logback-spring.xml --spring.config.location=application-qa.yml,classpath:BOOT-INF/classes/application.yml
+
+pcp-oc-service
+#!/bin/sh
+cp agent.config /usr/local/skywalking-agent/config/agent.config
+exec java -javaagent:/usr/local/skywalking-agent/skywalking-agent.jar -Dskywalking.agent.service_name=nobo-pcp-oc-service-uat -Dskywalking.collector.backend_service=10.42.6.208:33001 -Djava.security.egd=file:/dev/./urandom -Duser.timezone=GMT+08 -Xms1024m -Xmx1024m -jar /opt/app.jar --server.port=8080 --spring.profiles.active=prd --logging.config=/opt/logback-spring.xml --spring.config.location=application-prd.yml,classpath:BOOT-INF/classes/application.yml
+
+pcp-nc
+#!/bin/sh
+cp agent.config /usr/local/skywalking-agent/config/agent.config
+exec java -javaagent:/usr/local/skywalking-agent/skywalking-agent.jar -Dskywalking.agent.service_name=nobo-pcp-nc-uat -Dskywalking.collector.backend_service=10.42.6.208:33001 -Djava.security.egd=file:/dev/./urandom -Duser.timezone=GMT+08 -Xms1024m -Xmx1024m -jar /opt/app.jar --server.port=8080 --spring.profiles.active=qa --logging.config=/opt/logback-spring.xml --spring.config.location=application-prd.yml,classpath:BOOT-INF/classes/application.yml
+
+pcp-meeting  qa
+#!/bin/sh
+cp agent.config /usr/local/skywalking-agent/config/agent.config
+exec java -javaagent:/usr/local/skywalking-agent/skywalking-agent.jar -Dskywalking.agent.service_name=nobo-pcp-meeting-uat -Dskywalking.collector.backend_service=10.42.6.208:33001 -Djava.security.egd=file:/dev/./urandom -Duser.timezone=GMT+08 -Xms1024m -Xmx1024m -jar /opt/app.jar --server.port=8080 --spring.profiles.active=qa --logging.config=/opt/logback-spring.xml
+
+pcp-issue qa
+#!/bin/sh
+cp agent.config /usr/local/skywalking-agent/config/agent.config
+exec java -javaagent:/usr/local/skywalking-agent/skywalking-agent.jar -Dskywalking.agent.service_name=nobo-pcp-issue-uat -Dskywalking.collector.backend_service=10.42.6.208:33001 -Djava.security.egd=file:/dev/./urandom -Duser.timezone=GMT+08 -Xms1024m -Xmx1024m -jar /opt/app.jar --server.port=8080 --spring.profiles.active=qa --logging.config=/opt/logback-spring.xml
+
+pcp-file  qa
+#!/bin/sh
+cp agent.config /usr/local/skywalking-agent/config/agent.config
+exec java -javaagent:/usr/local/skywalking-agent/skywalking-agent.jar -Dskywalking.agent.service_name=nobo-pcp-file-uat -Dskywalking.collector.backend_service=10.42.6.208:33001 -Djava.security.egd=file:/dev/./urandom -Duser.timezone=GMT+08 -Xms1024m -Xmx1024m -jar /opt/app.jar --server.port=8080 --spring.profiles.active=qa --logging.config=/opt/logback-spring.xml --spring.config.location=application-prd.properties,classpath:BOOT-INF/classes/application.properties
+
+pcp-document  qa
+#!/bin/sh
+cp agent.config /usr/local/skywalking-agent/config/agent.config
+exec java -javaagent:/usr/local/skywalking-agent/skywalking-agent.jar -Dskywalking.agent.service_name=nobo-pcp-document-uat -Dskywalking.collector.backend_service=10.42.6.208:33001 -Djava.security.egd=file:/dev/./urandom -Duser.timezone=GMT+08 -jar /opt/app.jar -Xms512m -Xmx512m  --server.port=8080 --spring.config.location=classpath:BOOT-INF/classes/application.yml --spring.profiles.active=prd --spring.application.name=pcp-document --logging.config=/opt/logback-spring.xml
+
+pcp-config  qa
+#!/bin/sh
+cp agent.config /usr/local/skywalking-agent/config/agent.config
+exec java -javaagent:/usr/local/skywalking-agent/skywalking-agent.jar -Dskywalking.agent.service_name=nobo-pcp-config-uat -Dskywalking.collector.backend_service=10.42.6.208:33001 -cp /opt/app.jar -Duser.timezone=GMT+08 -Xms1024m -Xmx1024m org.springframework.boot.loader.PropertiesLauncher --server.port=8080 --spring.config.location=classpath:BOOT-INF/classes/application.yml --spring.profiles.active=qa --logging.config=/opt/logback-spring.xml
+
+pcp-bpm
+#!/bin/sh
+cp agent.config /usr/local/skywalking-agent/config/agent.config
+exec java -javaagent:/usr/local/skywalking-agent/skywalking-agent.jar -Dskywalking.agent.service_name=nobo-pcp-bpm-uat -Dskywalking.collector.backend_service=10.42.6.208:33001 -Djava.security.egd=file:/dev/./urandom -Duser.timezone=GMT+08 -Xms1024m -Xmx1024m -jar /opt/app.jar --server.port=8080 --spring.profiles.active=qa -Dsun.jnu.encoding=UTF-8 -Dfile.encoding=UTF-8
+
+pcp-api
+#!/bin/sh
+cp agent.config /usr/local/skywalking-agent/config/agent.config
+name="pcp-api"
+env="uat"
+sky_option="-javaagent:/usr/local/skywalking-agent/skywalking-agent.jar -Dskywalking.agent.service_name=${name}-$env -Dskywalking.collector.backend_service=10.42.6.208:33001"
+jmx_option="-javaagent:/opt/jmx_prometheus_javaagent-0.14.0.jar=8888:/opt/jmx-config.yaml -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Djava.rmi.server.hostname=localhost -Dcom.sun.management.jmxremote.port=5555"
+jvm_option="-Xms2048M -Xmx2048M"
+other_option="--server.port=8080 --spring.profiles.active=$env --logging.config=/opt/logback-spring.xml --srping.application.name=$name"
+exec java $sky_option $jmx_option $jvm_option -Djava.security.egd=file:/dev/./urandom -Duser.timezone=GMT+08 -jar /opt/app.jar $other_option
+#exec java -javaagent:/usr/local/skywalking-agent/skywalking-agent.jar -Dskywalking.agent.service_name=nobo-pcp-api-uat -Dskywalking.collector.backend_service=10.42.6.208:33001 -Djava.security.egd=file:/dev/./urandom -Duser.timezone=GMT+08 -Xms1024m -Xmx1024m -jar /opt/app.jar --server.port=8080 --spring.profiles.active=qa --logging.config=/opt/logback-spring.xml
+
+oms-social
+#!/bin/sh
+cp agent.config /usr/local/skywalking-agent/config/agent.config
+exec java -javaagent:/usr/local/skywalking-agent/skywalking-agent.jar -Dskywalking.agent.service_name=nobo-oms-social-uat -Dskywalking.collector.backend_service=10.42.6.208:33001 -Djava.security.egd=file:/dev/./urandom -Duser.timezone=GMT+08 -Xms1024m -Xmx1024m -jar /opt/app.jar --server.port=8080 --spring.profiles.active=qa --logging.config=/opt/logback-spring.xml
+
+oms-history
+
+oms-comment
+#!/bin/sh
+exec java -Djava.security.egd=file:/dev/./urandom -Duser.timezone=GMT+08 -Xms1024m -Xmx1024m -jar /opt/app.jar --server.port=8080 --spring.profiles.active=qa --logging.config=/opt/logback-spring.xml
+
+ladder-client
+#!/bin/sh
+cp agent.config /usr/local/skywalking-agent/config/agent.config
+exec java -javaagent:/usr/local/skywalking-agent/skywalking-agent.jar -Dskywalking.agent.service_name=nobo-ladder-client-uat -Dskywalking.collector.backend_service=10.42.6.208:33001 -Djava.security.egd=file:/dev/./urandom -Duser.timezone=GMT+08 -Xms1024m -Xmx1024m -jar /opt/app.jar --server.port=8080 --spring.profiles.active=prd --logging.config=/opt/logback-spring.xml
+
+gateway
+#!/bin/sh
+cp agent.config /usr/local/skywalking-agent/config/agent.config
+exec java -javaagent:/usr/local/skywalking-agent/skywalking-agent.jar -Dskywalking.agent.service_name=nobo-gateway-uat -Dskywalking.collector.backend_service=10.42.6.208:33001 -Djava.security.egd=file:/dev/./urandom -Duser.timezone=GMT+08 -Xms1024m -Xmx1024m -jar /opt/app.jar --server.port=8080 --spring.profiles.active=qa --logging.config=/opt/logback-spring.xml
+
+dingding
+#!/bin/sh
+#sleep 30000
+cp agent.config /usr/local/skywalking-agent/config/agent.config
+exec java -javaagent:/usr/local/skywalking-agent/skywalking-agent.jar -Dskywalking.agent.service_name=nobo-dingding-notification-uat -Dskywalking.collector.backend_service=10.42.6.208:33001 -Djava.security.egd=file:/dev/./urandom -Duser.timezone=GMT+08 -Xms1024m -Xmx1024m -jar /opt/app.jar --server.port=8080 --spring.profiles.active=prd --logging.config=/opt/logback-spring.xml
+
+
+
+nobo prd
+pdf-service
+#!/bin/sh
+exec java  -cp /opt/app.jar -Duser.timezone=GMT+08 -Xms1024m -Xmx1024m -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/opt/dumpfile.hprof org.springframework.boot.loader.PropertiesLauncher --server.port=8080 --spring.config.location=classpath:BOOT-INF/classes/application-prd.yml --spring.profiles.active=prd --spring.application.name=pdf-service --logging.config=/opt/logback-spring.xml
+
+pcp-variant  qa
+#!/bin/sh
+exec java -Djava.security.egd=file:/dev/./urandom -Duser.timezone=GMT+08 -Xms1024m -Xmx1024m -jar /opt/app.jar --server.port=8080 --spring.profiles.active=qa --logging.config=/opt/logback-spring.xml
+
+
+harbor.agilines.com/pcp-prd/pcp-backend:R2.22.0
+
+harbor.agilines.com/pcp-qa/pcp-biz-biz-all:biz-all-20220308-84-11e1972
+
+
+harbor.agilines.com/pcp-prd/pcp-backend:R2.21.4
+harbor.agilines.com/pcp-prd/pcp-biz-biz-all:R2.15.4
+
+
+#!/bin/sh
+cp agent.config /usr/local/skywalking-agent/config/agent.config
+exec java -Djava.security.egd=file:/dev/./urandom -Duser.timezone=GMT+08 -Xmx1024M -Xms1024M -XX:MaxMetaspaceSize=200M -XX:MetaspaceSize=200M -XX:MaxDirectMemorySize=256m -jar /opt/app.jar --server.port=8080  --spring.profiles.active=prd --logging.config=/opt/logback-spring.xml
+
+
+#!/bin/sh
+name="oms-bus"
+env="prd"
+customer="upower"
+cp agent.config /usr/local/skywalking-agent/config/agent.config
+sky_option="-javaagent:/usr/local/skywalking-agent/skywalking-agent.jar -Dskywalking.agent.service_name=${name}-${customer}-$env -Dskywalking.collector.backend_service=10.50.30.201:33001"
+arthas_opthion="-javaagent:/opt/arthas-agent.jar -Darthas.tunnelServer=ws://10.50.60.201:33601/ws -Darthas.appName=${name}-${customer}-$env"
+jmx_option="-javaagent:/opt/jmx_prometheus_javaagent-0.14.0.jar=8888:/opt/jmx-config.yaml -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Djava.rmi.server.hostname=localhost -Dcom.sun.management.jmxremote.port=5555"
+jvm_option="-Xms1024M -Xmx1024M -XX:MaxMetaspaceSize=200M -XX:MetaspaceSize=200M -XX:MaxDirectMemorySize=256m -XX:+DisableExplicitGC -XX:+UseParNewGC -XX:+UseConcMarkSweepGC -XX:-ReduceInitialCardMarks -XX:CMSInitiatingOccupancyFraction=70 -XX:+PrintGCDetails -verbose:gc -XX:+PrintGCTimeStamps -XX:+PrintGCApplicationConcurrentTime -XX:+PrintHeapAtGC -Xloggc:/mnt/persistence/gc.log -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/mnt/persistence/HeapDumpOnOutMemoryError -XX:NativeMemoryTracking=detail"
+other_option="--server.port=8080 --spring.profiles.active=$env --logging.config=/opt/logback-spring.xml"
+exec java $sky_option $jmx_option $jvm_option $arthas_opthion -Djava.security.egd=file:/dev/./urandom -Duser.timezone=GMT+08 -jar /opt/app.jar $other_option
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+nobo uat模板
+
+pcp-bom-backend
+#!/bin/sh
+cp agent.config /usr/local/skywalking-agent/config/agent.config
+name="pcp-bom-backend"
+env="uat"
+sky_option="-javaagent:/usr/local/skywalking-agent/skywalking-agent.jar -Dskywalking.agent.service_name=${name}-$env -Dskywalking.collector.backend_service=10.42.6.208:33001"
+jmx_option="-javaagent:/opt/jmx_prometheus_javaagent-0.14.0.jar=8888:/opt/jmx-config.yaml -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Djava.rmi.server.hostname=localhost -Dcom.sun.management.jmxremote.port=5555"
+jvm_option="-Xms2048M -Xmx2048M -XX:MaxMetaspaceSize=350M -XX:MetaspaceSize=350M -XX:MaxDirectMemorySize=256m -XX:+DisableExplicitGC -XX:+UseParNewGC -XX:+UseConcMarkSweepGC -XX:-ReduceInitialCardMarks -XX:CMSInitiatingOccupancyFraction=70 -XX:+PrintGCDetails -verbose:gc -XX:+PrintGCTimeStamps -XX:+PrintGCApplicationConcurrentTime -XX:+PrintHeapAtGC -Xloggc:/mnt/persistence/gc.log -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/mnt/persistence/HeapDumpOnOutMemoryError -XX:NativeMemoryTracking=detail"
+other_option="--server.port=8080 --spring.profiles.active=$env --logging.config=/opt/logback-spring.xml"
+exec java $sky_option $jmx_option $jvm_option $arthas_opthion -Djava.security.egd=file:/dev/./urandom -Duser.timezone=GMT+08 -jar /opt/app.jar $other_option
+#exec java -javaagent:/usr/local/skywalking-agent/skywalking-agent.jar -Dskywalking.agent.service_name=nobo-pcp-bom-backend-uat -Dskywalking.collector.backend_service=10.42.6.208:33001 -Xmx2048M -Xms2048M -XX:MaxMetaspaceSize=200M -XX:MetaspaceSize=200M -XX:MaxDirectMemorySize=256m -XX:-OmitStackTraceInFastThrow -cp ./app.jar -Duser.timezone=GMT+08 org.springframework.boot.loader.PropertiesLauncher --srping.application.name=pcp-bom-backend --server.port=8080 --spring.config.location=classpath:BOOT-INF/classes/application.yml --spring.profiles.active=prd --logging.config=/opt/logback-spring.xml
+
+pcp-common  qa
+#!/bin/sh
+cp agent.config /usr/local/skywalking-agent/config/agent.config
+name="pcp-common"
+env="uat"
+sky_option="-javaagent:/usr/local/skywalking-agent/skywalking-agent.jar -Dskywalking.agent.service_name=${name}-$env -Dskywalking.collector.backend_service=10.42.6.208:33001"
+jmx_option="-javaagent:/opt/jmx_prometheus_javaagent-0.14.0.jar=8888:/opt/jmx-config.yaml -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Djava.rmi.server.hostname=localhost -Dcom.sun.management.jmxremote.port=5555"
+jvm_option="-Xms1024M -Xmx1024M -XX:MaxMetaspaceSize=200M -XX:MetaspaceSize=200M -XX:MaxDirectMemorySize=256m -XX:+DisableExplicitGC -XX:+UseParNewGC -XX:+UseConcMarkSweepGC -XX:-ReduceInitialCardMarks -XX:CMSInitiatingOccupancyFraction=70 -XX:+PrintGCDetails -verbose:gc -XX:+PrintGCTimeStamps -XX:+PrintGCApplicationConcurrentTime -XX:+PrintHeapAtGC -Xloggc:/mnt/persistence/gc.log -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/mnt/persistence/HeapDumpOnOutMemoryError -XX:NativeMemoryTracking=detail"
+other_option="--server.port=8080 --spring.profiles.active=$env --logging.config=/opt/logback-spring.xml"
+exec java $sky_option $jmx_option $jvm_option $arthas_opthion -Djava.security.egd=file:/dev/./urandom -Duser.timezone=GMT+08 -jar /opt/app.jar $other_option
+
+
+nobo prd 模板
+#!/bin/sh
+cp agent.config /usr/local/skywalking-agent/config/agent.config
+name="pcp-backend"
+env="prd"
+sky_option="-javaagent:/usr/local/skywalking-agent/skywalking-agent.jar -Dskywalking.agent.service_name=${name}-$env -Dskywalking.collector.backend_service=10.42.6.208:33001"
+jmx_option="-javaagent:/opt/jmx_prometheus_javaagent-0.14.0.jar=8888:/opt/jmx-config.yaml -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Djava.rmi.server.hostname=localhost -Dcom.sun.management.jmxremote.port=5555"
+jvm_option="-Xms2048M -Xmx2048M -XX:MaxMetaspaceSize=200M -XX:MetaspaceSize=200M -XX:MaxDirectMemorySize=256m -XX:+DisableExplicitGC -XX:+UseParNewGC -XX:+UseConcMarkSweepGC -XX:-ReduceInitialCardMarks -XX:CMSInitiatingOccupancyFraction=70 -XX:+PrintGCDetails -verbose:gc -XX:+PrintGCTimeStamps -XX:+PrintGCApplicationConcurrentTime -XX:+PrintHeapAtGC -Xloggc:/mnt/persistence/gc.log -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/mnt/persistence/HeapDumpOnOutMemoryError -XX:NativeMemoryTracking=detail"
+other_option="--server.port=8080 --spring.profiles.active=$env --logging.config=/opt/logback-spring.xml"
+exec java $sky_option $jmx_option $jvm_option $arthas_option -Djava.security.egd=file:/dev/./urandom -Duser.timezone=GMT+08 -cp /opt/app.jar -Dloader.path=pcp-biz/pcp-biz.jar org.springframework.boot.loader.PropertiesLauncher $other_option
+
+#!/bin/sh
+cp agent.config /usr/local/skywalking-agent/config/agent.config
+name="pcp-tag"
+env="prd"
+sky_option="-javaagent:/usr/local/skywalking-agent/skywalking-agent.jar -Dskywalking.agent.service_name=${name}-$env -Dskywalking.collector.backend_service=10.42.6.208:33001"
+jmx_option="-javaagent:/opt/jmx_prometheus_javaagent-0.14.0.jar=8888:/opt/jmx-config.yaml -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Djava.rmi.server.hostname=localhost -Dcom.sun.management.jmxremote.port=5555"
+jvm_option="-Xms1024M -Xmx1024M -XX:MaxMetaspaceSize=200M -XX:MetaspaceSize=200M -XX:MaxDirectMemorySize=256m -XX:+DisableExplicitGC -XX:+UseParNewGC -XX:+UseConcMarkSweepGC -XX:-ReduceInitialCardMarks -XX:CMSInitiatingOccupancyFraction=70 -XX:+PrintGCDetails -verbose:gc -XX:+PrintGCTimeStamps -XX:+PrintGCApplicationConcurrentTime -XX:+PrintHeapAtGC -Xloggc:/mnt/persistence/gc.log -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/mnt/persistence/HeapDumpOnOutMemoryError -XX:NativeMemoryTracking=detail"
+other_option="--server.port=8080 --spring.profiles.active=$env --logging.config=/opt/logback-spring.xml"
+exec java $sky_option $jmx_option $jvm_option $arthas_opthion -Djava.security.egd=file:/dev/./urandom -Duser.timezone=GMT+08 -jar /opt/app.jar $other_option
+
+
+xxl-job  删掉健康检查
+
+PCP-VARIANT 当前与pcp在一起的variant服务
+
+PCP-VARIANT-BACKEND 不清楚这个服务，估计是PCP-VARIANT以前的老名字，现pcp其他服务未引用此服务，可以拿掉
+
+PCP-VARIANT-FRONT 吉利项目的变形产品服务对外接口（pcp其他服务未使用）
+
+PCP-VARIANT-TASK 吉利项目定时任务（pcp其他服务未使用）
+

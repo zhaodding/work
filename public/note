@@ -92,3 +92,7 @@ poc：
 pvc查看
 挂载路径：Deployments  - Edit Config  - Storage
 大小和类型：Storage - PersistentVolumeClaims
+
+新增服务的limit 设置成3Gi
+
+
