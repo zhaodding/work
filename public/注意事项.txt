@@ -4,3 +4,5 @@ pcp-backend  要用jenkins job去发
 
 newrizon
 ladder-client   qa|prd  只能在一个环境运行    修改spec.replicas: 1
+pcp-variant  start.sh去掉$jmx_option
+pcp-mail  deploy时间设置长一点

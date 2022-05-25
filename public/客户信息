@@ -1,3 +1,15 @@
+
+客户经理对接：
+悠跑（upower）：龚坚剑
+格拉默（grammer）：张磊
+前晨（newrizon）：宋金玲
+诺博（nobo）：吕祯炫
+重塑（refire）
+
+
+srm  前晨 srm
+
+
 nobo（诺博）
 
 
@@ -7,6 +19,10 @@ newrizon（前晨）
        主机      name      ip         ns      nginx
 uat   devops    devops  10.0.48.29   uat    maddleware-3
 prd   devops    devops  10.0.48.29   qc
+
+
+
+
 
 
 

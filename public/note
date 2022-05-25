@@ -78,21 +78,21 @@ done
 workload_affinity
 env:prd,project:newrizon   project:qc
 
-
-
 nginx端口暴露：
     codeup：devops->ingress  添加客户端口
     Jenkins
         url：http://10.164.9.41:8080/
         jobname：exposed-service-port-prd
 
+
 poc：
     pcp-elite-date  需要配置pvc
+
 
 pvc查看
 挂载路径：Deployments  - Edit Config  - Storage
 大小和类型：Storage - PersistentVolumeClaims
 
-新增服务的limit 设置成3Gi
 
+新增服务的limit 设置成3Gi
 
