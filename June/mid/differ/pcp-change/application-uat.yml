@@ -1,0 +1,186 @@
+server:
+  port: 8080
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://eureka-0.eureka:8080/eureka/
+  instance:
+    prefer-ip-address: true
+logging:
+  level:
+    dao:
+      com:
+        ithinkdt: WARN
+    com:
+      ithinkdt: WARN
+    io:
+      swagger:
+        models:
+          parameters:
+            AbstractSerializableParameter: ERROR
+    springfox:
+      documentation:
+        spring:
+          web:
+            readers:
+              operation: ERROR
+    org:
+      springframework: WARN
+feign:
+  connect:
+    timeout:
+      millis: 3000
+  httpclient:
+    enabled: true
+  hystrix:
+    enabled: true
+  read:
+    timeout:
+      millis: 15000
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          strategy: SEMAPHORE
+          thread:
+            timeoutInMilliseconds: 10000.0
+        timeout:
+          enabled: false
+i18n:
+  cookie:
+    maxage: 31536000
+    name: locale
+  default:
+    locale: zh_CN
+mybatis-plus:
+  config-location: classpath:conf/dao/sql-map-config.xml
+  mapper-locations: classpath*:conf/dao/sqlmap/*.xml,classpath*:mapper/*.xml
+  type-aliases-package: com.ithinkdt.pcp.change.admin.entity.*,com.ithinkdt.pcp.change.cax.entity.*,com.ithinkdt.pcp.change.bom.entity.*
+ribbon:
+  ConnectTimeout: 30000
+  MaxAutoRetries: 1
+  MaxAutoRetriesNextServer: 2
+  ReadTimeout: 15000
+redis:
+  maxIdle: 300
+  maxTotal: 1000
+  maxWaitMillis: 1000
+  minEvictableIdleTimeMillis: 300000
+  numTestsPerEvictionRun: 1024
+  testOnBorrow: true
+  testWhileIdle: true
+  timeBetweenEvictionRunsMillis: 30000
+  timeout: 10000
+  database: 15
+  hostName: 10.164.9.234
+  password: dadas1ASAc3
+  port: 26379
+mq:
+  broker: mq-namesrv-0.mq-namesrv:9876
+  producerGroup: PCP-CHANGE
+  mqSwitch: true
+  topic: BPM-TASK-INFO
+  taskCreateTag: SYNERGY
+  taskfinishTag: CONSUMMATION
+  taskTransferTag: TRANSFER
+  unfinishTag: UNFINISH
+  processFinishTag: PROCESS_FINISH
+  urgeHandleTag: URGEHANDLE #催办的消息队列
+spring:
+  datasource:
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+    driver-class-name: com.mysql.jdbc.Driver
+    filters: stat,slf4j
+    initialSize: 1
+    maxActive: 20
+    maxPoolPreparedStatementPerConnectionSize: 20
+    maxWait: 60000
+    minEvictableIdleTimeMillis: 300000
+    minIdle: 5
+    poolPreparedStatements: true
+    testOnBorrow: false
+    testOnReturn: false
+    testWhileIdle: true
+    timeBetweenEvictionRunsMillis: 60000
+    type: com.alibaba.druid.pool.DruidDataSource
+    validationQuery: SELECT 'x'
+    password: dasda32GSADfd
+    username: root
+    url: jdbc:mysql://10.164.9.234:3306/pcp_change?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT&allowMultiQueries=true
+ithinkdt:
+  security:
+    social:
+      - icon: wechat.png
+        icon_alive: alive-wechat.png
+        title: 深迪SSO登录
+        auth_type: Author2.0
+        auth_kind: ithinkdtsso
+        client_id: pcp
+        client_secret: 123456
+        url: '[HOST]/api/v1/pcp_change/pub/ssologin/callback?self_redirect=true'
+        ssoUrl: '[HOST]/api/v1/pcp_change/pub/ssologin'
+        user-authorization-uri: https://sso-uat.agilines.com/pub/oauth2/authorize?response_type=code&client_id=pcp&redirect_uri=[REDIRECT_URI]&scope=all&domain=[DOMAIN]
+        access_token_uri: https://sso-uat.agilines.com/pub/oauth2/access_token?grant_type=authorization_code&client_id=pcp&client_secret=123456&code=[CODE]
+        user_info_uri: https://sso-uat.agilines.com/cli/full_user_info?access_token=[ACCESS_TOKEN]&domain=[DOMAIN]
+        logout_uri: https://sso-uat.agilines.com/cli/logout?access_token=[ACCESS_TOKEN]
+  oauth2:
+    default:
+      enable: true
+
+proc:
+  def:
+    id: form_publish
+  ecr:
+    id: ecr_publish_flow
+  eco:
+    id: eco_publish_flow
+change:
+  genCode: 'ecm'
+  type: false
+  basicForm: 'DR_FORM'
+  ecr:
+    genCode: 'ecr'
+    type: false
+    basicForm: 'ECR_FORM'
+  eco:
+    genCode: 'eco'
+    type: false
+    basicForm: 'ECO_FORM'
+  er:
+    genCode: 'er'
+    type: false
+    basicForm: 'ER_FORM'
+  tcr:
+    genCode: 'tcr'
+    type: false
+    basicForm: 'TCR_FORM'
+  secr:
+    genCode: 'secr'
+    type: false
+    basicForm: 'SECR_FORM'
+xxl:
+  job:
+    accessToken:
+    admin:
+      addresses: http://xxl-job:8080/xxl-job-admin
+    executor:
+      appname: pcp-change-job
+      address:
+      ip:
+      port: 0
+      logpath:
+      logretentiondays: 7
+pcpbean:
+  weblog: true
+  NcProducer: false
+  ncProducer4ChangeModule : true
+file:
+  fileUploadUrl: https://pcp-uat.agilines.com/api/v1/ithinkdt-file/pub/bus/file/upload.do
+  filePath: "\\local"
+  fileName: "工程变更申请.pdf"
+srm:
+  secretKey: agilines0823.
+  querySupplierByPartNoUrl: http://srm.agilines.com:82/api/v1/ithinkdt-srm-scm-new/pub/materialSync/supplier/list.do #根据物料号查询供应商的信息url

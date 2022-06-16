@@ -1,0 +1,28 @@
+邮件格式：
+
+因敏桥生产环境部署oc系统，oc系统使用域名需要，现申请以下域名解析：
+    xx.cn 10.xx.xx.xx
+
+
+    pcp-oc.agilines.cn  10.50.30.202
+
+
+
+pcp-oc-engine
+pcp-gateway2
+
+
+ns:pcp-prd
+project:pcp
+env:prd
+
+
+pcp-oc-engine-pcp-prd-config
+pcp-oc-engine-pcp-prd-deploy
+pcp-gateway2-pcp-prd-config
+pcp-gateway2-pcp-prd-deploy
+
+project:pcp,env:prd
+
+
+project:pcp,env:prd

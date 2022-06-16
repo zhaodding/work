@@ -1,0 +1,46 @@
+server:
+    port: 8080
+
+spring:
+    application:
+        name: pdf-service
+    profiles:
+        active: prd
+
+feign:
+    connect:
+        timeout:
+            millis: 3000
+    httpclient:
+        enabled: true
+    hystrix:
+        enabled: true
+    read:
+        timeout:
+            millis: 5000
+hystrix:
+    command:
+        default:
+            execution:
+                isolation:
+                    strategy: SEMAPHORE
+                    thread:
+                        timeoutInMilliseconds: 10000.0
+                timeout:
+                    enabled: false
+
+# 服务配置
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: "http://eureka-0.eureka:8500/eureka/,http://eureka-1.eureka:8500/eureka/,http://eureka-2.eureka:8500/eureka/"
+
+  instance:
+    prefer-ip-address: true
+
+## pdf export config
+pdfExport:
+  fontSim: static/simsun.ttf
+  uploadPath: /data

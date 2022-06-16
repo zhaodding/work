@@ -1,0 +1,100 @@
+server:
+  port: 8080
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://eureka-0.eureka:8080/eureka/
+  instance:
+    prefer-ip-address: true
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: full
+redis:
+  database: 15
+  hostName: 10.164.9.234
+  password: dadas1ASAc3
+  port: 26379
+  maxIdle: 300
+  maxTotal: 1000
+  maxWaitMillis: 1000
+  minEvictableIdleTimeMillis: 300000
+  numTestsPerEvictionRun: 1024
+  testOnBorrow: true
+  testWhileIdle: true
+  timeBetweenEvictionRunsMillis: 30000
+  timeout: 10000
+spring:
+  datasource:
+    password: dasda32GSADfd
+    username: root
+    url: jdbc:mysql://10.164.9.234:3306/project?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone = GMT
+  data:
+      mongodb:
+        uri: mongodb://pcp_project:5kghoFUjImS6Wyor@10.164.9.234:27011,10.164.9.234:27012,10.164.9.234:27013/pcp_project
+  profiles:
+    active: prd
+ithinkdt:
+  app:
+    name: project
+  security:
+    social:
+      - icon: wechat.png
+        icon_alive: alive-wechat.png
+        title: 深迪SSO登录
+        auth_type: Author2.0
+        auth_kind: ithinkdtsso
+        client_id: pcp
+        client_secret: 123456
+        url: 'https://pcp-uat.agilines.com/api/v1/project/pub/ssologin/callback'
+        ssoUrl: 'https://pcp-uat.agilines.com/api/v1/project/pub/ssologin'
+        user-authorization-uri: https://sso-uat.agilines.com/pub/oauth2/authorize?response_type=code&client_id=[CLIENT_ID]&redirect_uri=[REDIRECT_URI]&scope=all&domain=[DOMAIN]
+        access_token_uri: https://sso-uat.agilines.com/pub/oauth2/access_token?grant_type=authorization_code&client_id=[CLIENT_ID]&app_secret=[CLIENT_SECRET]&code=[CODE]
+        user_info_uri: https://sso-uat.agilines.com/cli/full_user_info?access_token=[ACCESS_TOKEN]&domain=[DOMAIN]
+        logout_uri: https://sso-uat.agilines.com/cli/logout?access_token=[ACCESS_TOKEN]
+  oauth2:
+    default:
+      enable: true
+  oauth:
+    config:
+      no-user-redirect: https://uc-uat.agilines.com/api/v1/ithinkdt-user-center/pub/register_user?profile=[PROFILE]&redirectUri=[REDIRECT_URI]
+
+team:
+  user:
+    repeat:
+      check: false
+
+#流程key
+task:
+  node:
+    proc:
+      id: task_process
+#MQ
+mq:
+  broker: mq-namesrv-0.mq-namesrv:9876
+  producerGroup: OMS-BUS-PRODUCER
+  consumerGroup: OMS-BUS-CONSUMER
+  topic: OMS-BUS-TOPIC
+  tag: "*"
+upload:
+  path: /upload
+
+#xxl-job配置
+xxl:
+  job:
+    accessToken:
+    admin:
+      addresses: http://xxl-job:8080/xxl-job-admin
+    executor:
+      appname: project-job
+      address:
+      ip:
+      port: 0
+      logpath:
+      logretentiondays: 7
+

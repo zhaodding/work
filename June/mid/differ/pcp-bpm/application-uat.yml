@@ -1,0 +1,39 @@
+dbcp2:
+  initialSize: 4
+  maxIdle: 4
+  maxTotal: 5
+  maxWait: 5
+  minEvictableIdleTimeMillis: 900000
+  minIdle: 1
+  numTestsPerEvictionRun: 10
+  removeAbandonedOnBorrow: true
+  removeAbandonedOnMaintenance: true
+  removeAbandonedTimeout: 120
+  testOnBorrow: true
+  testOnCreate: false
+  testOnReturn: false
+  testWhileIdle: true
+  timeBetweenEvictionRunsMillis: 15000
+  validationQuery: SELECT 1 FROM DUAL
+endpoints:
+  default:
+    web:
+      enabled: true
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://eureka-0.eureka:8080/eureka/
+  instance:
+    prefer-ip-address: true
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    password: dasda32GSADfd
+    url: jdbc:mysql://10.164.9.234:3306/pcp_bpm?useUnicode=true&useSSL=true&characterEncoding=UTF-8&autoReconnect=true&failOverReadOnly=false
+    username: root
+  security:
+    user:
+      name: admin
+      password: admin123

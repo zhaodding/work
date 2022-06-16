@@ -1,0 +1,275 @@
+server:
+  port: 8080
+websocket:
+  port: 9002
+logging:
+  level:
+    dao:
+      com:
+        ithinkdt: INFO
+    io:
+      swagger:
+        models:
+          parameters:
+            AbstractSerializableParameter: ERROR
+    springfox:
+      documentation:
+        spring:
+          web:
+            readers:
+              operation: ERROR
+    org:
+      springframework: INFO
+feign:
+  connect:
+    timeout:
+      millis: 3000
+  httpclient:
+    enabled: true
+  hystrix:
+    enabled: true
+  read:
+    timeout:
+      millis: 5000
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://eureka-0.eureka:8080/eureka/
+  instance:
+    prefer-ip-address: true
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          strategy: SEMAPHORE
+          thread:
+            timeoutInMilliseconds: 10000.0
+        timeout:
+          enabled: false
+i18n:
+  cookie:
+    maxage: 31536000
+    name: locale
+  default:
+    locale: zh_CN
+mybatis-plus:
+  config-location: classpath:conf/dao/sql-map-config.xml
+  mapper-locations: classpath*:conf/dao/sqlmap/*.xml,classpath*:mapper/*/*.xml
+  type-aliases-package: com.agilines.pcp.admin.entity.*,com.agilines.pcp.cax.entity.*,com.agilines.pcp.bom.entity.*
+  type-handlers-package: com.ithinkdt.web.util;com.ithinkdt.plugin.mybatis.plugin.handler
+redis:
+  maxIdle: 300
+  maxTotal: 1000
+  maxWaitMillis: 1000
+  minEvictableIdleTimeMillis: 300000
+  numTestsPerEvictionRun: 1024
+  testOnBorrow: true
+  testWhileIdle: true
+  timeBetweenEvictionRunsMillis: 30000
+  timeout: 10000
+  database: 15
+  hostName: 10.164.9.234
+  password: dadas1ASAc3
+  port: 26379
+ribbon:
+  ConnectTimeout: 3000
+  MaxAutoRetries: 1
+  MaxAutoRetriesNextServer: 2
+  ReadTimeout: 5000
+spring:
+  application:
+    name: pcp-bom-backend
+  auth:
+    clientId: client_1
+    secret: 123456
+  redis:
+    redisson:
+      config: /opt/redisson.yml
+  datasource:
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+    driver-class-name: com.mysql.jdbc.Driver
+    filters: stat,wall,slf4j
+    initialSize: 1
+    maxActive: 20
+    maxPoolPreparedStatementPerConnectionSize: 20
+    maxWait: 60000
+    minEvictableIdleTimeMillis: 300000
+    minIdle: 5
+    poolPreparedStatements: true
+    testOnBorrow: false
+    testOnReturn: false
+    testWhileIdle: true
+    timeBetweenEvictionRunsMillis: 60000
+    type: com.alibaba.druid.pool.DruidDataSource
+    validationQuery: SELECT 'x'
+    password: dasda32GSADfd
+    username: root
+    url: jdbc:mysql://10.164.9.234:3306/pcp?useUnicode=true&characterEncoding=utf-8&useSSL=false
+  freemarker:
+    allow-request-override: false
+    cache: true
+    charset: UTF-8
+    check-template-location: true
+    content-type: text/html
+    expose-request-attributes: false
+    expose-session-attributes: false
+    expose-spring-macro-helpers: false
+    prefer-file-system-access: false
+    suffix: .ftl
+    template-loader-path: classpath:/templates/
+  mvc:
+    throw-exception-if-no-handler-found: true
+  profiles:
+    active: prd
+bom:
+  upgrade:
+    use_latest_rev_part: false
+# MQ
+mq:
+  # 默认生产分组
+  producerGroup: pcp-producer
+  # 默认TOPIC
+  topic:
+  # 默认TAG(值为*时需要加引号)
+  tag: \"*\"
+  #
+  # NameServer地址
+  broker: mq-namesrv-0.mq-namesrv:9876
+  # 转换任务Topic
+  catiaTaskTopic: CATIA_FILE_CONVERSION_TASK
+  catiaTaskCreateTag: CREATE
+  consumerGroup: PCP-CG
+  drawingTopic: DRAWING_FILE_CONVERSION_TASK
+  dwgTopic: DWG_FILE_CONVERSION_TASK
+nc:
+  part_bom:
+    consumer:
+      group: PCP-CG
+      topic: PCP-C-PART_BOM
+      tag: UPDATE
+    producer.topic: PCP-P-PART_BOM
+  dict:
+    consumer:
+      group: PCP-CG
+      topic: PCP-C-DICT
+      tag: UPDATE
+
+# 产品的应用名称
+ithinkdt:
+  security:
+    social:
+      - icon: wechat.png
+        icon_alive: alive-wechat.png
+        title: 深迪SSO登录
+        auth_type: Author2.0
+        auth_kind: ithinkdtsso
+        client_id: pcp
+        client_secret: 123456
+        url: '[HOST]/api/v1/pcp/pub/ssologin/callback'
+        ssoUrl: '[HOST]/api/v1/pcp/pub/ssologin'
+        user-authorization-uri: https://sso-uat.agilines.com/pub/oauth2/authorize?response_type=code&client_id=pcp&redirect_uri=[REDIRECT_URI]&scope=all&domain=[DOMAIN]&state=[STATE]
+        access_token_uri: https://sso-uat.agilines.com/pub/oauth2/access_token?grant_type=authorization_code&client_id=pcp&client_secret=123456&code=[CODE]
+        user_info_uri: https://sso-uat.agilines.com/cli/full_user_info?access_token=[ACCESS_TOKEN]&domain=[DOMAIN]
+        logout_uri: https://sso-uat.agilines.com/cli/logout?access_token=[ACCESS_TOKEN]
+  oauth2:
+    default:
+      enable: true
+  oauth:
+    config:
+      no-user-redirect: https://uc-uat.agilines.com/api/v1/ithinkdt-user-center/pub/register_user?profile=[PROFILE]&redirectUri=[REDIRECT_URI]
+  user-center:
+    config:
+      register-uri: https://uc-uat.agilines.com/#/pub/register?domain=[DOMAIN]&profile=[PROFILE]&redirectUri=[REDIRECT_URI]
+  file-center:
+    config:
+      upload-uri: https://pcp-uat.agilines.com/api/v1/ithinkdt-file/pub/bus/file/upload.do
+      download-uri: https://pcp-uat.agilines.com/api/v1/ithinkdt-file/pub/bus/file/download.do?fileId=[FILE_ID]
+  batch-server:
+    config:
+      add-uri: https://pcp-uat.agilines.com/api/v1/pcp-batch-server/pub/batchserver/addTask
+      check-uri: https://pcp-uat.agilines.com/api/v1/pcp-batch-server/pub/batchserver/checkPartStatus
+  secretKey: dufiqrlewrjpadsf1244fdas
+  app:
+    name: pcp
+  part:
+    upgrade: true
+    minorRevisionLength: 2
+    singleWorking: false
+    useSystemRevision: true
+  #是否开启日志记录功能
+
+  enableRecordColumn: true
+  partRevisionInit: AA.01
+  partMajorRevision: AA
+  partMinorRevision: 1
+  partStatusInit: 0
+  partExtendedData: '[{"label":"cad_bom.part.gwm.part.number","attr_type":"gwm_part_no","data_type":"varchar","visibility":true,"configurable":true,"required":false,"index":34},{"label":"cad_bom.part.gust.part.no","attr_type":"gust_part_no","data_type":"varchar","visibility":true,"configurable":true,"required":false,"index":35},{"label":"cad_bom.part.desc","attr_type":"desc","data_type":"varchar","visibility":true,"configurable":true,"required":false,"index":36},{"label":"cad_bom.part.importance","attr_type":"importance","data_type":"varchar","visibility":true,"configurable":true,"required":false,"index":37},{"label":"cad_bom.part.unit","attr_type":"unit","data_type":"varchar","visibility":true,"configurable":true,"required":false,"index":38},{"label":"cad_bom.part.thumbnail","attr_type":"thumbnail","data_type":"varchar","visibility":true,"configurable":true,"required":false,"index":39},{"label":"cad_bom.part.drawing.number","attr_type":"drawing_number","data_type":"varchar","visibility":true,"configurable":true,"required":false,"index":40},{"label":"cad_bom.part.drawing.version","attr_type":"drawing_version","data_type":"varchar","visibility":true,"configurable":true,"required":false,"index":41},{"label":"cad_bom.part.extension","attr_type":"extension","data_type":"varchar","visibility":true,"configurable":true,"required":false,"index":42},{"label":"cad_bom.part.part.type","attr_type":"part_type","data_type":"varchar","ctrl_type":"select","visibility":true,"configurable":true,"required":true,"dict_code":"PART_TYPE","takeNumber":true,"index":43},{"label":"cad_bom.part.material","attr_type":"material","data_type":"varchar","visibility":true,"configurable":true,"required":false,"index":44},{"label":"cad_bom.part.material.standard","attr_type":"material_standard","data_type":"varchar","visibility":true,"configurable":true,"required":false,"index":45},{"label":"cad_bom.part.out.line","attr_type":"out_line","data_type":"varchar","visibility":true,"configurable":true,"required":false,"index":46},{"label":"cad_bom.part.weight","attr_type":"weight","data_type":"varchar","visibility":true,"configurable":true,"required":false,"index":47},{"label":"cad_bom.part.surface","attr_type":"surface","data_type":"varchar","visibility":true,"configurable":true,"required":false,"index":48},{"label":"cad_bom.part.surface.area","attr_type":"surface_area","data_type":"varchar","visibility":true,"configurable":true,"required":false,"index":49},{"label":"cad_bom.part.division","attr_type":"division","data_type":"varchar","visibility":true,"configurable":true,"required":false,"index":50},{"label":"cad_bom.part.supplier","attr_type":"supplier","data_type":"varchar","visibility":true,"configurable":true,"required":false,"index":51},{"label":"cad_bom.part.memo","attr_type":"memo","data_type":"varchar","visibility":true,"configurable":true,"required":false,"index":52}]'
+  bomExtendedData: '[]'
+  showPartHead: '[{"label":"PCP Part Number","attr_type":"part_no","ctrl_type":"part_no","data_type":"varchar","visibility":true,"configurable":true,"required":false,"index":2},{"label":"cad_bom.part.gwm.part.number","attr_type":"gwm_part_no","data_type":"varchar","ctrl_type":"input","visibility":true,"configurable":true,"required":false,"editModalVis":true,"index":34},{"label":"PCP Revision","attr_type":"revision","ctrl_type":"revision","data_type":"varchar","visibility":true,"configurable":true,"required":false,"index":3},{"visibility":false,"editModalVis":false,"defaultValue":"0","data_type":"varchar","index":65,"attr_type":"is_deformation","label":"cad_bom.part.is.deformation","ctrl_type":"select","disabled":true,"dict_code":"IS_DEFORMATION","configurable":false,"required":false},{"label":"cad_bom.part.is.deformation","ctrl_type":"select","attr_type":"is_deformation_desc","data_type":"varchar","visibility":true,"configurable":true,"required":false,"index":66,"defaultValue":"0"},{"label":"cad_bom.part.is.deformation.shape.code","ctrl_type":"input","attr_type":"shape_code","data_type":"varchar","visibility":true,"configurable":true,"required":false,"index":67},{"label":"msg.e.cad_bom.owner","attr_type":"owner_name","data_type":"varchar","visibility":true,"configurable":true,"required":false,"editModalVis":false,"index":53},{"label":"cad_bom.part.en_name","attr_type":"name_en","data_type":"varchar","ctrl_type":"input","visibility":true,"configurable":true,"required":false,"editModalVis":false,"index":32},{"label":"cad_bom.part.ch.name","attr_type":"name","data_type":"varchar","ctrl_type":"input","visibility":true,"configurable":true,"required":false,"editModalVis":false,"index":7},{"label":"PCP Instance Name","attr_type":"instance_name","data_type":"varchar","visibility":true,"configurable":true,"required":false,"index":9},{"label":"Status","attr_type":"status","data_type":"varchar","ctrl_type":"status","visibility":false,"configurable":true,"required":false,"index":4},{"visibility":true,"data_type":"varchar","index":72,"attr_type":"status_desc","label":"msg.e.cad_bom.status","configurable":true,"required":false},{"label":"cad_bom.part.gust.part.no","attr_type":"gust_part_no","data_type":"varchar","ctrl_type":"input","visibility":true,"configurable":true,"required":false,"editModalVis":true,"index":35},{"label":"cad_bom.part.desc","attr_type":"desc","data_type":"varchar","ctrl_type":"input","visibility":true,"configurable":true,"required":false,"editModalVis":true,"index":36},{"label":"cad_bom.part.importance","attr_type":"importance","data_type":"varchar","ctrl_type":"select","visibility":true,"configurable":true,"required":false,"dict_code":"PART_SIGNIFICANCE","editModalVis":true,"index":37},{"label":"cad_bom.part.unit","attr_type":"unit","data_type":"varchar","ctrl_type":"select","visibility":true,"configurable":true,"required":false,"dict_code":"PART_UNIT","editModalVis":true,"index":38},{"label":"cad_bom.part.thumbnail","attr_type":"thumbnail","data_type":"varchar","ctrl_type":"input","visibility":true,"configurable":true,"required":false,"editModalVis":true,"index":39},{"label":"cad_bom.part.drawing.number","attr_type":"drawing_number","data_type":"varchar","ctrl_type":"input","visibility":true,"configurable":true,"required":false,"editModalVis":true,"index":40},{"label":"cad_bom.part.drawing.version","attr_type":"drawing_version","data_type":"varchar","ctrl_type":"input","visibility":true,"configurable":true,"required":false,"editModalVis":true,"index":41},{"label":"cad_bom.part.part.type","attr_type":"part_type","data_type":"varchar","ctrl_type":"select","visibility":false,"configurable":false,"required":false,"dict_code":"PART_TYPE","takeNumber":true,"editModalVis":true,"index":42},{"label":"cad_bom.part.material","attr_type":"material","data_type":"varchar","ctrl_type":"input","visibility":true,"configurable":true,"required":false,"editModalVis":true,"index":43},{"label":"cad_bom.part.material.standard","attr_type":"material_standard","data_type":"varchar","ctrl_type":"input","visibility":true,"editModalVis":true,"configurable":true,"required":false,"index":44},{"label":"cad_bom.part.out.line","attr_type":"out_line","data_type":"varchar","ctrl_type":"input","visibility":true,"editModalVis":true,"configurable":true,"required":false,"index":45},{"label":"cad_bom.part.weight","attr_type":"weight","data_type":"varchar","ctrl_type":"input","visibility":true,"configurable":true,"editModalVis":true,"required":false,"index":46},{"label":"cad_bom.part.surface","attr_type":"surface","data_type":"varchar","ctrl_type":"input","visibility":true,"editModalVis":true,"configurable":true,"required":false,"index":47},{"label":"cad_bom.part.surface.area","attr_type":"surface_area","data_type":"varchar","ctrl_type":"input","visibility":true,"editModalVis":true,"configurable":true,"required":false,"index":48},{"label":"cad_bom.part.division","attr_type":"division","data_type":"varchar","ctrl_type":"input","visibility":true,"editModalVis":true,"configurable":true,"required":false,"index":49},{"label":"cad_bom.part.supplier","attr_type":"supplier","data_type":"varchar","ctrl_type":"input","visibility":true,"editModalVis":true,"configurable":true,"required":false,"index":50},{"label":"cad_bom.part.memo","attr_type":"memo","data_type":"varchar","ctrl_type":"input","visibility":true,"editModalVis":true,"configurable":true,"required":false,"index":51},{"label":"msg.e.cad_bom.owner","attr_type":"owner","data_type":"varchar","visibility":false,"configurable":false,"editModalVis":false,"required":false,"index":12},{"label":"msg.e.cad_bom.last.update.time","attr_type":"update_date","data_type":"dateTime","ctrl_type":"dateTime","visibility":true,"configurable":true,"required":false,"index":10},{"label":"msg.e.cad_bom.last.update.user","attr_type":"update_user_name","data_type":"varchar","visibility":true,"configurable":true,"required":false,"index":11},{"label":"msg.e.cad_bom.matrix","attr_type":"matrix","data_type":"varchar","visibility":false,"configurable":true,"required":false,"index":13},{"label":"cad_bom.part.cad.file.md5","attr_type":"cad_file_md5","data_type":"varchar","visibility":false,"configurable":false,"required":true,"index":14},{"label":"cad_bom.part.part.id","attr_type":"id","data_type":"varchar","visibility":false,"configurable":false,"required":false,"index":20},{"label":"cad_bom.part.bom.id","attr_type":"bom_id","data_type":"varchar","visibility":false,"configurable":false,"required":false,"index":21},{"label":"cad_bom.part.web.3d.file.md5","attr_type":"web_3d_file_md5","data_type":"varchar","visibility":false,"configurable":true,"required":false,"index":24},{"label":"cad_bom.part.web.3d.file.md5","attr_type":"web_3d_file_md5","data_type":"varchar","visibility":false,"configurable":true,"required":false,"index":24},{"label":"msg.e.cad_bom.cad.type","attr_type":"cad_type","data_type":"varchar","visibility":false,"configurable":false,"required":false,"index":25},{"label":"msg.e.cad_bom.definition","attr_type":"definition","data_type":"varchar","visibility":false,"configurable":false,"required":false,"index":27},{"label":"msg.e.cad_bom.nomenclature","attr_type":"nomenclature","data_type":"varchar","visibility":false,"configurable":false,"required":false,"index":28},{"label":"msg.e.cad_bom.source","attr_type":"source","data_type":"varchar","visibility":false,"configurable":false,"required":false,"index":29},{"label":"msg.e.cad_bom.descriptionRef","attr_type":"description_ref","data_type":"varchar","visibility":false,"configurable":false,"required":false,"index":30},{"label":"msg.e.cad_bom.descriptionInst","attr_type":"description_inst","data_type":"varchar","visibility":false,"configurable":false,"required":false,"index":31},{"label":"msg.e.cad_bom.has_latest","attr_type":"has_latest","data_type":"varchar","visibility":false,"configurable":false,"required":false,"index":54},{"label":"msg.e.cad_bom.action","attr_type":"action","data_type":"varchar","visibility":false,"configurable":false,"required":false,"index":55},{"label":"msg.e.cad_bom.part_number","attr_type":"cad_part_no","data_type":"varchar","ctrl_type":"cad_part_no","visibility":false,"configurable":true,"required":true,"dtWidth":"250px","index":56},{"label":"msg.e.cad_bom.version","attr_type":"cad_part_revision","data_type":"varchar","ctrl_type":"cad_part_revision","visibility":false,"configurable":true,"required":true,"index":57},{"label":"msg.e.cad_bom.instance.name","attr_type":"cad_instance_name","data_type":"varchar","visibility":false,"configurable":false,"required":false,"index":58},{"label":"old part id","attr_type":"old_to_id","data_type":"varchar","visibility":false,"configurable":false,"required":false,"index":59},{"label":"old part no","attr_type":"old_part_no","data_type":"varchar","visibility":false,"configurable":false,"required":false,"index":60},{"label":"old part revision","attr_type":"old_part_revision","data_type":"varchar","visibility":false,"configurable":false,"required":false,"index":61},{"label":"old cad part type","attr_type":"old_cad_part_type","data_type":"varchar","visibility":false,"configurable":false,"required":false,"index":62},{"label":"BOM Change Type","attr_type":"bom_change_type","data_type":"varchar","visibility":false,"configurable":false,"required":false,"index":63},{"label":"Old MD5","attr_type":"old_md5","data_type":"varchar","visibility":false,"configurable":false,"required":false,"index":64},{"label":"file name","attr_type":"file_name","data_type":"varchar","visibility":false,"configurable":false,"required":false,"index":68},{"label":"old_file_name","attr_type":"old_file_name","data_type":"varchar","visibility":false,"configurable":false,"required":false,"index":69},{"label":"old child shape","attr_type":"old_child_shape","data_type":"varchar","visibility":false,"configurable":false,"required":false,"index":70},{"label":"是否CAD Only","attr_type":"cad_only","ctrl_type":"select","data_type":"varchar","visibility":false,"configurable":false,"required":false,"index":71},{"visibility":false,"data_type":"varchar","index":73,"attr_type":"is_lock","label":"msg.cad_bom.part.is_lock","ctrl_type":"input","configurable":false,"required":false},{"visibility":false,"data_type":"varchar","index":74,"attr_type":"lock_user","label":"msg.cad_bom.part.lock_user","ctrl_type":"input","configurable":false,"required":false},{"visibility":false,"data_type":"varchar","index":75,"attr_type":"bom_only","label":"msg.e.e_part.bom_only","configurable":false,"required":false},{"maxlength":20,"label":"计划重量","attr_type":"plan_weight","data_type":"decimal","ctrl_type":"inputNumber","visibility":true,"configurable":true,"required":false,"editModalVis":true,"index":76,"minVal":"0.00000001","maxVal":"999999999.99999999"},{"maxlength":20,"label":"实际重量","attr_type":"actual_weight","data_type":"decimal","ctrl_type":"inputNumber","visibility":true,"configurable":true,"required":false,"editModalVis":true,"index":77,"minVal":"0.00000001","maxVal":"999999999.99999999"}]'
+  codePoolEffectiveDay: 7
+  bomHomeCondition: t_part_master.`name`,t_cad_part.gwm_part_no,t_cad_part.gust_part_no,t_cad_part.desc,t_cad_part.unit,t_cad_part.thumbnail,t_cad_part.drawing_number,t_cad_part.drawing_version,t_cad_part.importance,t_cad_part.material,t_cad_part.material_standard,t_cad_part.out_line,t_cad_part.weight,t_cad_part.surface,t_cad_part.surface_area,t_cad_part.division,t_cad_part.supplier,t_cad_part.memo,t_part_master.`name_en`
+  eBomHomeCondition: t_part_master.`name`,t_part_master.`name_en`,t_e_part.gwm_part_no,t_e_part.part_no
+  ebomDataHead: '[{"label":"msg.e.e_bom.id","attr_type":"id","data_type":"varchar","ctrl_type":"input","visibility":false,"disabled":true,"configurable":false,"required":true,"is_ch":false,"index":0,"searchVisibility":true,"bus_name":"t_e_part","remarkModalVis":true},{"label":"msg.e.e_bom.parent_part_no","attr_type":"parent_part_no","data_type":"varchar","ctrl_type":"input","visibility":false,"disabled":false,"configurable":true,"required":true,"is_ch":false,"index":1,"searchVisibility":true,"bus_name":"t_e_bom","remarkModalVis":true},{"label":"msg.e.e_bom.parent_part_version","attr_type":"parent_part_version","data_type":"varchar","ctrl_type":"input","visibility":false,"disabled":false,"configurable":true,"required":true,"is_ch":false,"index":2,"searchVisibility":true,"bus_name":"t_e_bom","remarkModalVis":true},{"label":"msg.e.e_bom.child_part_no","attr_type":"child_part_no","data_type":"varchar","ctrl_type":"part_no","visibility":true,"disabled":false,"configurable":true,"required":true,"is_ch":false,"index":3,"searchVisibility":true,"bus_name":"t_e_bom","remarkModalVis":true},{"label":"msg.e.e_bom.child_part_version","attr_type":"child_part_version","data_type":"varchar","ctrl_type":"input","visibility":true,"disabled":false,"configurable":true,"required":true,"is_ch":false,"index":4,"searchVisibility":true,"bus_name":"t_e_bom","remarkModalVis":true},{"label":"msg.e.e_bom.make_buy","attr_type":"makeBuyDesc","data_type":"varchar","ctrl_type":"input","visibility":true,"disabled":true,"configurable":true,"required":false,"editModalVis":false,"is_ch":false,"index":5,"searchVisibility":true,"bus_name":"t_e_bom","remarkModalVis":true},{"label":"msg.e.e_bom.quantity","attr_type":"quantity","data_type":"decimal","ctrl_type":"inputNumber","visibility":true,"disabled":false,"configurable":true,"required":true,"minVal":"0.001","maxVal":"9999999999.999","editModalVis":true,"is_ch":false,"index":6,"searchVisibility":true,"bus_name":"t_e_bom","remarkModalVis":true},{"label":"msg.e.e_bom.line_number","attr_type":"line_number","data_type":"varchar","ctrl_type":"input","visibility":false,"disabled":true,"configurable":true,"required":false,"is_ch":false,"index":7,"searchVisibility":true,"bus_name":"t_e_bom","remarkModalVis":true},{"label":"msg.e.e_bom.usage_exp","attr_type":"usage_exp","data_type":"varchar","ctrl_type":"userDefine","visibility":true,"disabled":false,"maxlength":1024,"editModalVis":true,"configurable":true,"required":false,"is_ch":false,"index":8,"searchVisibility":true,"bus_name":"t_e_bom","remarkModalVis":true},{"label":"msg.e.e_bom.fna","attr_type":"fna","data_type":"varchar","ctrl_type":"input","visibility":true,"disabled":false,"maxlength":50,"configurable":true,"required":false,"editModalVis":true,"is_ch":false,"index":9,"searchVisibility":true,"bus_name":"t_e_bom","remarkModalVis":true},{"label":"msg.e.e_bom.ch_name","attr_type":"name","data_type":"varchar","ctrl_type":"inputInset","visibility":true,"editModalVis":true,"disabled":false,"configurable":true,"required":true,"is_ch":false,"index":10,"bus_name":"t_part_master"},{"label":"msg.e.e_bom.en_name","attr_type":"name_en","data_type":"varchar","ctrl_type":"inputInset","visibility":true,"editModalVis":true,"disabled":false,"configurable":true,"required":true,"is_ch":true,"index":11,"bus_name":"t_part_master"},{"label":"msg.e.e_bom.is_color","attr_type":"isColoDescr","ctrl_type":"input","data_type":"varchar","visibility":true,"editModalVis":false,"disabled":false,"configurable":true,"required":false,"is_ch":false,"index":12,"bus_name":"t_e_part"},{"label":"msg.e.e_bom.part_type","attr_type":"partTypeName","data_type":"varchar","ctrl_type":"select","visibility":true,"editModalVis":false,"disabled":false,"configurable":true,"required":true,"is_ch":false,"dict_code":"PART_TYPE","takeNumber":true,"index":13,"bus_name":"t_e_part"},{"label":"msg.e.e_bom.part.unit_code","attr_type":"unit_code","data_type":"varchar","ctrl_type":"select","visibility":false,"editModalVis":true,"disabled":false,"configurable":true,"required":true,"is_ch":false,"dict_code":"UNIT_CODE","takeNumber":true,"index":14,"bus_name":"t_e_part"},{"label":"msg.e.e_bom.part.unit_code","attr_type":"unitCodeDesc","data_type":"varchar","ctrl_type":"input","visibility":true,"editModalVis":false,"disabled":false,"configurable":true,"required":false,"is_ch":false,"takeNumber":true,"index":15,"bus_name":"t_e_part"},{"label":"msg.e.e_bom.part.memo","attr_type":"memo","data_type":"varchar","ctrl_type":"input","visibility":true,"maxlength":100,"editModalVis":true,"disabled":false,"configurable":true,"required":false,"is_ch":false,"index":16,"bus_name":"t_e_part"},{"label":"msg.e.e_bom.create_user","attr_type":"create_user","data_type":"varchar","ctrl_type":"input","visibility":false,"disabled":false,"configurable":true,"required":true,"is_ch":false,"index":17,"searchVisibility":true,"bus_name":"t_e_bom","remarkModalVis":true},{"label":"msg.e.e_bom.create_user","attr_type":"create_user_name","data_type":"varchar","ctrl_type":"input","visibility":true,"disabled":false,"configurable":true,"required":true,"is_ch":false,"index":18,"searchVisibility":true,"bus_name":"t_e_bom","remarkModalVis":true},{"label":"msg.e.e_bom.create_date","attr_type":"create_date","data_type":"varchar","ctrl_type":"dateTime","visibility":true,"disabled":false,"configurable":true,"required":true,"is_ch":false,"index":19,"searchVisibility":true,"bus_name":"t_e_bom","remarkModalVis":true},{"label":"msg.e.e_bom.update_user","attr_type":"updateUserName","data_type":"varchar","ctrl_type":"input","visibility":true,"disabled":false,"configurable":true,"required":true,"is_ch":false,"index":20,"searchVisibility":true,"bus_name":"t_e_bom","remarkModalVis":true},{"label":"msg.e.e_bom.update_user","attr_type":"updateUserName","data_type":"varchar","ctrl_type":"input","visibility":false,"disabled":false,"configurable":true,"required":true,"is_ch":false,"index":21,"searchVisibility":true,"bus_name":"t_e_bom","remarkModalVis":true},{"label":"msg.e.e_bom.update_date","attr_type":"update_date","data_type":"varchar","ctrl_type":"dateTime","visibility":true,"disabled":false,"configurable":true,"required":true,"is_ch":false,"index":22,"searchVisibility":true,"bus_name":"t_e_bom","remarkModalVis":true},{"label":"msg.e.e_bom.owner","attr_type":"owner","data_type":"varchar","ctrl_type":"input","visibility":false,"disabled":false,"configurable":true,"required":true,"is_ch":false,"index":23,"searchVisibility":true,"bus_name":"t_e_part","remarkModalVis":true},{"label":"msg.e.e_bom.owner","attr_type":"owner_name","data_type":"varchar","ctrl_type":"input","visibility":true,"disabled":false,"configurable":true,"required":true,"is_ch":false,"index":24,"searchVisibility":true,"bus_name":"t_e_part","remarkModalVis":true},{"label":"msg.e.e_bom.status","attr_type":"statusDesc","data_type":"varchar","ctrl_type":"input","visibility":true,"disabled":false,"configurable":true,"required":true,"is_ch":false,"index":25,"searchVisibility":true,"bus_name":"t_e_part","remarkModalVis":true},{"label":"msg.e.e_bom.bomId","attr_type":"bomId","data_type":"varchar","ctrl_type":"input","visibility":false,"disabled":true,"configurable":false,"required":true,"is_ch":false,"index":26,"searchVisibility":true,"bus_name":"t_e_bom","remarkModalVis":true},{"label":"msg.e.e_bom.make_buy","attr_type":"make_buy","data_type":"varchar","ctrl_type":"select","visibility":false,"disabled":false,"configurable":true,"required":false,"editModalVis":true,"dict_code":"ebom_purchase_type","is_ch":false,"index":27,"searchVisibility":true,"bus_name":"t_e_bom","remarkModalVis":true},{"label":"msg.e.e_bom.is_color","attr_type":"is_color","data_type":"varchar","ctrl_type":"select","visibility":false,"editModalVis":true,"disabled":false,"configurable":true,"required":true,"is_ch":false,"dict_code":"cn_is_color","takeNumber":true,"index":28,"bus_name":"t_e_part"},{"label":"msg.e.cad_bom.cadowner","attr_type":"owner","data_type":"varchar","visibility":false,"configurable":false,"required":false,"bus_name":"t_cad_part","index":29},{"label":"msg.e.cad_bom.cadowner","attr_type":"owner_name","data_type":"varchar","visibility":true,"configurable":true,"required":false,"bus_name":"t_cad_part","index":30},{"label":"cad_bom.part.gust.part.no","attr_type":"gust_part_no","data_type":"varchar","ctrl_type":"input","visibility":true,"configurable":true,"required":false,"bus_name":"t_cad_part","index":31},{"label":"cad_bom.part.desc","attr_type":"desc","data_type":"varchar","ctrl_type":"input","visibility":true,"configurable":true,"required":false,"bus_name":"t_cad_part","index":32},{"label":"cad_bom.part.importance","attr_type":"importance","data_type":"varchar","ctrl_type":"select","visibility":true,"configurable":true,"required":false,"dict_code":"PART_SIGNIFICANCE","bus_name":"t_cad_part","index":33},{"label":"cad_bom.part.thumbnail","attr_type":"thumbnail","data_type":"varchar","visibility":true,"configurable":true,"required":false,"bus_name":"t_cad_part","index":34},{"label":"cad_bom.part.drawing.number","attr_type":"drawing_number","data_type":"varchar","visibility":true,"configurable":true,"required":false,"bus_name":"t_cad_part","index":35},{"label":"cad_bom.part.drawing.version","attr_type":"drawing_version","data_type":"varchar","visibility":true,"configurable":true,"required":false,"bus_name":"t_cad_part","index":36},{"label":"cad_bom.part.material","attr_type":"material","data_type":"varchar","ctrl_type":"input","visibility":true,"configurable":true,"required":false,"bus_name":"t_cad_part","index":37},{"label":"cad_bom.part.material.standard","attr_type":"material_standard","data_type":"varchar","visibility":true,"configurable":true,"required":false,"bus_name":"t_cad_part","index":38},{"label":"cad_bom.part.out.line","attr_type":"out_line","data_type":"varchar","visibility":true,"configurable":true,"required":false,"bus_name":"t_cad_part","index":39},{"label":"cad_bom.part.weight","attr_type":"weight","data_type":"varchar","ctrl_type":"input","visibility":true,"configurable":true,"editModalVis":true,"required":false,"bus_name":"t_cad_part","index":40},{"label":"cad_bom.part.surface","attr_type":"surface","data_type":"varchar","ctrl_type":"input","visibility":true,"configurable":true,"editModalVis":true,"required":false,"bus_name":"t_cad_part","index":41},{"label":"cad_bom.part.surface.area","attr_type":"surface_area","data_type":"varchar","visibility":true,"ctrl_type":"input","configurable":true,"editModalVis":true,"required":false,"bus_name":"t_cad_part","index":42},{"label":"cad_bom.part.division","attr_type":"division","data_type":"varchar","ctrl_type":"input","visibility":true,"configurable":true,"required":false,"bus_name":"t_cad_part","index":43},{"label":"cad_bom.part.supplier","attr_type":"supplier","data_type":"varchar","ctrl_type":"input","visibility":true,"configurable":true,"required":false,"bus_name":"t_cad_part","index":44},{"label":"GWM Part number","attr_type":"gwm_part_no","bus_name":"t_cad_part","index":45,"data_type":"varchar","visibility":true,"configurable":true,"required":false,"ctrl_type":"input"},{"label":"msg.e.part.bom_only","attr_type":"bom_only","data_type":"varchar","ctrl_type":"input","visibility":false,"configurable":false,"required":false,"bus_name":"t_e_part","index":46},{"maxlength":0,"label":"计划重量","attr_type":"plan_weight","data_type":"decimal","ctrl_type":"inputNumber","minVal":"0.00000001","maxVal":"999999999.99999999","visibility":true,"configurable":true,"required":false,"editModalVis":true,"index":47,"bus_name":"t_e_part"},{"maxlength":0,"label":"实际重量","attr_type":"actual_weight","data_type":"decimal","ctrl_type":"inputNumber","minVal":"0.00000001","maxVal":"999999999.99999999","visibility":true,"configurable":true,"required":false,"editModalVis":true,"index":48,"bus_name":"t_e_part"}]'
+  extendsEPartColumns: '[{"sourceField":"owner","targetField":"owner"},{"sourceField":"bomOnly","targetField":"bomOnly"},{"sourceField":"isColor","targetField":"isColor"}]'
+  extendsEBomColumns: '[{"sourceField":"usageExp","targetField":"usageExp"},{"sourceField":"makeBuy","targetField":"makeBuy"}]'
+  superSearchColumns: '[{"label":"msg.e.cad_bom.part.id","attr_type":"id","data_type":"varchar","visibility":false,"configurable":false,"required":false,"busName":"t_cad_part","index":1},{"label":"msg.e.cad_bom.part.status","attr_type":"status","data_type":"varchar","visibility":false,"configurable":false,"required":false,"busName":"t_cad_part","index":12},{"label":"msg.e.cad_bom.part.no","attr_type":"part_no","data_type":"varchar","visibility":true,"configurable":true,"required":false,"busName":"t_cad_part","index":2},{"label":"msg.e.cad_bom.revision","attr_type":"revision","data_type":"varchar","visibility":true,"configurable":true,"required":false,"busName":"t_cad_part","index":3},{"label":"msg.e.cad_bom.owner","attr_type":"owner","data_type":"varchar","visibility":false,"configurable":false,"required":false,"busName":"t_cad_part","index":4},{"label":"msg.e.cad_bom.last.update.time","attr_type":"update_date","data_type":"dateTime","ctrl_type":"dateTime","visibility":true,"configurable":true,"required":false,"busName":"t_cad_part","index":5},{"label":"msg.e.cad_bom.part.type","attr_type":"part_type","data_type":"varchar","ctrl_type":"select","visibility":true,"configurable":true,"required":false,"dict_code":"PART_TYPE","takeNumber":true,"busName":"t_cad_part","index":6},{"label":"msg.e.cad_bom.last.update.user","attr_type":"update_user","data_type":"varchar","visibility":true,"configurable":true,"required":false,"busName":"t_cad_part","index":7},{"label":"cad_bom.part.photo","attr_type":"image","data_type":"varchar","visibility":false,"configurable":false,"required":false,"busName":"t_cad_part","index":8},{"label":"msg.e.cad_bom.part.name","attr_type":"name","data_type":"varchar","ctrl_type":"name","visibility":true,"configurable":true,"required":false,"busName":"t_part_master","index":9},{"label":"msg.e.cad_bom.en_name","attr_type":"name_en","data_type":"varchar","ctrl_type":"name_en","visibility":true,"configurable":true,"required":false,"busName":"t_part_master","index":10},{"label":"cad_bom.part.gwm.part.number","attr_type":"gwm_part_no","data_type":"varchar","ctrl_type":"input","visibility":true,"configurable":true,"required":false,"busName":"t_cad_part","index":11},{"label":"cad_bom.part.is.deformation","attr_type":"is_deformation","data_type":"varchar","visibility":true,"configurable":true,"required":false,"busName":"t_cad_part","index":12}]'
+  whereUsedHead: '[{"label":"msg.e.cad_bom.part.no","attr_type":"part_no","data_type":"varchar","visibility":true,"configurable":true,"required":false,"index":0,"editModalVis":true,"ctrl_type":"part_no"},{"label":"msg.e.cad_bom.revision","attr_type":"revision","data_type":"varchar","visibility":true,"configurable":true,"required":false,"index":1,"editModalVis":true,"ctrl_type":"revision"},{"label":"msg.e.cad_bom.part_number","attr_type":"cad_part_no","data_type":"varchar","ctrl_type":"cad_part_no","visibility":true,"configurable":true,"required":true,"dtWidth":"250px","index":2},{"label":"msg.e.cad_bom.version","attr_type":"cad_part_revision","data_type":"varchar","ctrl_type":"cad_part_revision","visibility":true,"configurable":true,"required":true,"index":3},{"label":"cad_bom.part.is.deformation","ctrl_type":"select","attr_type":"is_deformation_desc","data_type":"varchar","visibility":true,"configurable":true,"required":false,"index":68,"defaultValue":"0"},{"label":"cad_bom.part.is.deformation.shape.code","ctrl_type":"input","attr_type":"shape_code","data_type":"varchar","visibility":true,"configurable":true,"required":false,"index":69},{"visibility":true,"data_type":"varchar","index":4,"attr_type":"status_desc","label":"msg.e.cad_bom.status","configurable":true,"required":false},{"label":"msg.e.cad_bom.part.name","attr_type":"name","data_type":"varchar","visibility":true,"configurable":true,"required":false,"index":5,"editModalVis":true,"ctrl_type":"input"},{"label":"msg.e.cad_bom.en_name","attr_type":"name_en","data_type":"varchar","visibility":false,"configurable":false,"required":false,"index":6},{"label":"msg.e.cad_bom.instance.name","attr_type":"cad_instance_name","data_type":"varchar","visibility":true,"configurable":true,"required":true,"index":7},{"label":"msg.e.cad_bom.pcp.instance.name","attr_type":"instance_name","data_type":"varchar","visibility":true,"configurable":true,"required":false,"index":8},{"label":"�Ƿ�CAD Only","attr_type":"cad_only","ctrl_type":"select","data_type":"varchar","visibility":true,"configurable":true,"required":false,"index":75},{"label":"msg.e.cad_bom.matrix","attr_type":"matrix","data_type":"varchar","visibility":false,"configurable":true,"required":false,"index":9},{"label":"msg.e.cad_bom.owner","attr_type":"owner_name","data_type":"varchar","visibility":true,"configurable":true,"required":false,"index":53,"editModalVis":true,"ctrl_type":""},{"label":"msg.e.cad_bom.last.update.time","attr_type":"update_date","ctrl_type":"dateTime","data_type":"varchar","visibility":true,"configurable":true,"required":false,"index":11},{"label":"msg.e.cad_bom.last.update.user","attr_type":"update_user_name","data_type":"varchar","visibility":true,"configurable":true,"required":false,"index":12},{"label":"msg.e.cad_bom.cad.type","attr_type":"cad_type","data_type":"varchar","visibility":false,"configurable":false,"required":false,"index":15},{"label":"msg.e.cad_bom.part_number","attr_type":"cad_part_no","data_type":"varchar","ctrl_type":"cad_part_no","visibility":false,"configurable":true,"required":true,"dtWidth":"250px","index":56},{"label":"msg.e.cad_bom.version","attr_type":"cad_part_revision","data_type":"varchar","ctrl_type":"cad_part_revision","visibility":false,"configurable":true,"required":true,"index":57}]'
+  cadSearchColumns: '[{"visibility":false,"data_type":"varchar","busName":"t_cad_part","index":4,"attr_type":"status","label":"msg.e.cad_bom.status","ctrl_type":"status","configurable":true,"required":false},{"visibility":false,"data_type":"varchar","busName":"t_cad","index":53,"attr_type":"cad_file_md5","label":"msg.e.cad_bom.cad.file.md5","configurable":false,"required":true},{"visibility":false,"data_type":"varchar","busName":"t_cad","index":14,"attr_type":"cad_file","label":"msg.e.cad_bom.cad.file","configurable":true,"required":true},{"visibility":false,"data_type":"varchar","busName":"t_cad","index":15,"attr_type":"cad_type","label":"msg.e.cad_bom.cad.type","configurable":false,"required":false},{"visibility":false,"data_type":"varchar","busName":"t_cad","index":18,"attr_type":"web_3d_file","label":"msg.e.cad_bom.web.3d.file","configurable":true,"required":false},{"visibility":false,"data_type":"varchar","busName":"t_cad","index":19,"attr_type":"web_3d_file_md5","label":"msg.e.cad_bom.web.3d.file.md5","configurable":true,"required":false},{"visibility":false,"editModalVis":true,"data_type":"varchar","busName":"t_cad_part","index":36,"attr_type":"desc","label":"cad_bom.part.desc","ctrl_type":"input","configurable":true,"required":false},{"visibility":false,"editModalVis":true,"data_type":"varchar","busName":"t_cad_part","index":37,"attr_type":"importance","label":"cad_bom.part.importance","ctrl_type":"select","dict_code":"PART_SIGNIFICANCE","configurable":true,"required":false},{"visibility":false,"editModalVis":true,"data_type":"varchar","busName":"t_cad_part","index":38,"attr_type":"unit","label":"cad_bom.part.unit","ctrl_type":"select","dict_code":"PART_UNIT","configurable":true,"required":false},{"visibility":false,"data_type":"varchar","busName":"t_cad_part","index":39,"attr_type":"thumbnail","label":"cad_bom.part.thumbnail","configurable":true,"required":false},{"visibility":false,"data_type":"varchar","busName":"t_cad_part","index":40,"attr_type":"drawing_number","label":"cad_bom.part.drawing.number","configurable":true,"required":false},{"visibility":false,"data_type":"varchar","busName":"t_cad_part","index":41,"attr_type":"drawing_version","label":"cad_bom.part.drawing.version","configurable":true,"required":false},{"visibility":false,"takeNumber":true,"data_type":"varchar","busName":"t_cad_part","index":42,"attr_type":"part_type","label":"cad_bom.part.part.type","ctrl_type":"select","dict_code":"PART_TYPE","configurable":false,"required":false},{"visibility":false,"editModalVis":true,"data_type":"varchar","busName":"t_cad_part","index":43,"attr_type":"material","label":"cad_bom.part.material","ctrl_type":"input","configurable":true,"required":false},{"visibility":false,"editModalVis":true,"data_type":"varchar","busName":"t_cad_part","index":44,"attr_type":"material_standard","ctrl_type":"input","label":"cad_bom.part.material.standard","configurable":true,"required":false},{"visibility":false,"editModalVis":true,"data_type":"varchar","busName":"t_cad_part","index":45,"attr_type":"out_line","label":"cad_bom.part.out.line","configurable":true,"ctrl_type":"input","required":false},{"visibility":false,"editModalVis":false,"data_type":"varchar","busName":"t_cad_part","index":46,"attr_type":"weight","label":"cad_bom.part.weight","configurable":true,"required":false},{"visibility":false,"editModalVis":true,"data_type":"varchar","busName":"t_cad_part","index":47,"attr_type":"surface","ctrl_type":"input","label":"cad_bom.part.surface","configurable":true,"required":false},{"visibility":false,"editModalVis":true,"data_type":"varchar","busName":"t_cad_part","index":48,"attr_type":"surface_area","label":"cad_bom.part.surface.area","configurable":true,"ctrl_type":"input","required":false},{"visibility":false,"editModalVis":true,"data_type":"varchar","busName":"t_cad_part","index":49,"attr_type":"division","label":"cad_bom.part.division","ctrl_type":"input","configurable":true,"required":false},{"visibility":false,"editModalVis":true,"data_type":"varchar","busName":"t_cad_part","index":50,"attr_type":"supplier","label":"cad_bom.part.supplier","ctrl_type":"input","configurable":true,"required":false},{"visibility":false,"editModalVis":true,"data_type":"varchar","busName":"t_cad_part","index":51,"attr_type":"memo","label":"cad_bom.part.memo","ctrl_type":"input","configurable":true,"required":false},{"visibility":false,"busName":"t_cad_part","index":52,"attr_type":"gwm_part_no","label":"GWMPartnumber","ctrl_type":"input","required":false,"editModalVis":true,"data_type":"varchar","configurable":true},{"label":"msg.e.cad_bom.part.id","attr_type":"id","data_type":"varchar","visibility":false,"configurable":false,"required":false,"busName":"t_cad_part","index":1},{"label":"msg.e.cad_bom.part.no","attr_type":"part_no","data_type":"varchar","visibility":true,"configurable":true,"required":false,"busName":"t_cad_part","index":2},{"label":"msg.e.cad_bom.revision","attr_type":"revision","data_type":"varchar","visibility":true,"configurable":true,"required":false,"busName":"t_cad_part","index":3},{"label":"msg.e.cad_bom.owner","attr_type":"owner","data_type":"varchar","visibility":false,"configurable":false,"required":false,"busName":"t_cad_part","index":4},{"label":"msg.e.cad_bom.last.update.time","attr_type":"update_date","data_type":"dateTime","ctrl_type":"dateTime","visibility":true,"configurable":true,"required":false,"busName":"t_cad_part","index":5},{"label":"msg.e.cad_bom.last.update.user","attr_type":"update_user","data_type":"varchar","visibility":true,"configurable":true,"required":false,"busName":"t_cad_part","index":7},{"label":"cad_bom.part.photo","attr_type":"image","data_type":"varchar","visibility":false,"configurable":false,"required":false,"busName":"t_cad_part","index":98},{"label":"msg.e.cad_bom.part.name","attr_type":"name","data_type":"varchar","ctrl_type":"name","visibility":true,"configurable":true,"required":false,"busName":"t_part_master","index":9},{"label":"msg.e.cad_bom.en_name","attr_type":"name_en","data_type":"varchar","ctrl_type":"name_en","visibility":true,"configurable":true,"required":false,"busName":"t_part_master","index":10},{"label":"msg.e.cad_bom.part_number","attr_type":"cad_part_no","data_type":"varchar","visibility":true,"configurable":true,"required":false,"busName":"t_cad","index":11},{"label":"msg.e.cad_bom.revision","attr_type":"cad_part_revision","data_type":"varchar","visibility":true,"configurable":true,"required":false,"busName":"t_cad","index":12},{"label":"cad_bom.part.is.deformation","attr_type":"is_deformation","data_type":"varchar","visibility":true,"configurable":true,"required":false,"busName":"t_cad_part","index":9}]'
+  ePartCreateDataHead: '[{"label":"msg.e.e_part.create_physical_product","attr_type":"create_physical_product","data_type":"varchar","ctrl_type":"switch","visibility":true,"configurable":true,"editModalVis":true,"required":true,"is_ch":false,"dtLeft":"250px","maxLength":20,"index":19,"searchVisibility":true,"bus_name":"t_e_part","queryField":false,"remarkModalVis":true,"defaultValue":false},{"label":"msg.e.e_part.part_no","attr_type":"part_no","data_type":"varchar","ctrl_type":"input","visibility":true,"disabled":true,"configurable":true,"required":false,"is_ch":false,"dtLeft":"250px","index":0,"searchVisibility":true,"bus_name":"t_e_part","remarkModalVis":true},{"label":"msg.e.e_part.ch_name","attr_type":"name","data_type":"varchar","ctrl_type":"inputInset","visibility":true,"disabled":false,"editModalVis":true,"configurable":true,"required":true,"is_ch":false,"dtLeft":"250px","index":1,"bus_name":"t_part_master"},{"label":"msg.e.e_part.en_name","attr_type":"name_en","data_type":"varchar","ctrl_type":"inputInset","visibility":true,"disabled":false,"editModalVis":true,"configurable":true,"required":true,"is_ch":true,"dtLeft":"250px","index":2,"bus_name":"t_part_master"},{"label":"msg.e.e_part.is_color","attr_type":"is_color","ctrl_type":"select","data_type":"varchar","visibility":true,"disabled":false,"configurable":true,"required":true,"is_ch":false,"dict_code":"cn_is_color","index":3,"bus_name":"t_e_part"},{"label":"msg.e.e_part.part_type","attr_type":"part_type","data_type":"varchar","ctrl_type":"select","visibility":true,"disabled":false,"configurable":true,"required":true,"is_ch":false,"dict_code":"PART_TYPE","takeNumber":true,"index":4,"bus_name":"t_e_part"},{"label":"msg.e.e_part.part.unit_code","attr_type":"unit_code","data_type":"varchar","ctrl_type":"select","visibility":true,"disabled":false,"configurable":true,"required":true,"is_ch":false,"dict_code":"UNIT_CODE","takeNumber":true,"index":5,"bus_name":"t_e_part"},{"label":"msg.e.e_part.part.memo","attr_type":"memo","data_type":"varchar","ctrl_type":"input","visibility":true,"disabled":false,"maxLength":50,"configurable":true,"required":false,"is_ch":false,"index":6,"maxlength":30,"bus_name":"t_e_part"},{"label":"msg.e.e_part.id","attr_type":"id","data_type":"varchar","ctrl_type":"input","visibility":false,"disabled":false,"configurable":true,"required":true,"is_ch":false,"dtLeft":"250px","index":7,"searchVisibility":true,"bus_name":"t_e_part","remarkModalVis":true},{"label":"msg.e.e_part.create_user","attr_type":"create_user","data_type":"varchar","ctrl_type":"input","visibility":false,"disabled":false,"configurable":true,"required":true,"is_ch":false,"dtLeft":"250px","index":8,"searchVisibility":true,"bus_name":"t_e_part","remarkModalVis":true},{"label":"msg.e.e_part.create_date","attr_type":"create_date","data_type":"varchar","ctrl_type":"dateTime","visibility":false,"disabled":false,"configurable":true,"required":true,"is_ch":false,"dtLeft":"250px","index":9,"searchVisibility":true,"bus_name":"t_e_part","remarkModalVis":true},{"label":"msg.e.e_part.update_user","attr_type":"update_user","data_type":"varchar","ctrl_type":"input","visibility":false,"disabled":false,"configurable":true,"required":true,"is_ch":false,"dtLeft":"250px","index":10,"searchVisibility":true,"bus_name":"t_e_part","remarkModalVis":true},{"label":"msg.e.e_part.update_date","attr_type":"update_date","data_type":"varchar","ctrl_type":"dateTime","visibility":false,"disabled":false,"configurable":true,"required":true,"is_ch":false,"dtLeft":"250px","index":11,"searchVisibility":true,"bus_name":"t_e_part","remarkModalVis":true},{"label":"msg.e.e_part.owner","attr_type":"owner","data_type":"varchar","ctrl_type":"input","visibility":false,"disabled":false,"configurable":true,"required":true,"is_ch":false,"dtLeft":"250px","index":12,"searchVisibility":true,"bus_name":"t_e_part","remarkModalVis":true},{"label":"msg.e.e_part.major_version","attr_type":"major_version","data_type":"varchar","ctrl_type":"input","visibility":false,"disabled":false,"configurable":true,"required":true,"is_ch":false,"dtLeft":"250px","index":13,"searchVisibility":true,"bus_name":"t_e_part","remarkModalVis":true},{"label":"msg.e.e_part.status","attr_type":"status","data_type":"varchar","ctrl_type":"input","visibility":false,"disabled":false,"configurable":true,"required":true,"is_ch":false,"dtLeft":"250px","index":14,"searchVisibility":true,"bus_name":"t_e_part","remarkModalVis":true},{"label":"msg.e.e_part.bom_only","attr_type":"bom_only","data_type":"varchar","ctrl_type":"input","visibility":false,"disabled":false,"configurable":true,"required":true,"is_ch":false,"dtLeft":"250px","index":15,"searchVisibility":true,"bus_name":"t_e_part","remarkModalVis":true},{"label":"msg.e.e_part.material_no","attr_type":"material_no","data_type":"varchar","ctrl_type":"input","visibility":false,"disabled":false,"configurable":true,"required":true,"is_ch":false,"dtLeft":"250px","index":16,"searchVisibility":true,"bus_name":"t_material_part","remarkModalVis":true},{"maxlength":0,"label":"计划重量","attr_type":"plan_weight","data_type":"decimal","ctrl_type":"inputNumber","minVal":"0.00000001","maxVal":"999999999.99999999","visibility":true,"configurable":true,"required":false,"searchVisibility":true,"editModalVis":true,"bus_name":"t_e_part","index":17},{"maxlength":0,"label":"实际重量","attr_type":"actual_weight","data_type":"decimal","ctrl_type":"inputNumber","minVal":"0.00000001","maxVal":"999999999.99999999","visibility":true,"searchVisibility":true,"configurable":true,"required":false,"editModalVis":true,"bus_name":"t_e_part","index":18}]'
+  syncCadPartColumns: '[{"sourceField":"partNo","targetField":"partNo"},{"sourceField":"majorRevision","targetField":"majorVersion"},{"sourceField":"partMasterId","targetField":"partMasterId"},{"sourceField":"unit","targetField":"unitCode"},{"sourceField":"status","targetField":"status"},{"sourceField":"tenantId","targetField":"tenantId"},{"sourceField":"memo","targetField":"memo"},{"sourceField":"name","targetField":"name"},{"sourceField":"owner","targetField":"owner"},{"sourceField":"partType","targetField":"partType"},{"sourceField":"createUser","targetField":"createUser"},{"sourceField":"createDate","targetField":"createDate"},{"sourceField":"updateUser","targetField":"updateUser"},{"sourceField":"updateDate","targetField":"updateDate"},{"sourceField":"gwmPartNo","targetField":"gwmPartNo"},{"sourceField":"gwmPartNo","targetField":"gwmPartNo"},{"sourceField":"maturityStage","targetField":"maturityStage"},{"sourceField":"planWeight","targetField":"planWeight"},{"sourceField":"actualWeight","targetField":"actualWeight"},{"sourceField":"partNo","targetField":"cadPartNo"}]'
+
+mongo:
+  config:
+    replica:
+      set:
+        address: 10.164.9.234
+  dbname: admin
+  password: daSFjf12F5
+  port: 27017
+  username: root
+  options:
+    always-use-m-beans: false
+    connect-timeout: 10000
+    heartbeat-connect-timeout: 20000
+    heartbeat-frequency: 10000
+    heartbeat-socket-timeout: 20000
+    local-threshold: 15
+    max-connection-idel-time: 0
+    max-connection-life-time: 0
+    max-connections-per-host: 20
+    max-wait-time: 120000
+    min-connections-per-host: 20
+    min-heartbeat-frequency: 500
+    server-selection-timeout: 30000
+    socket-keep-alive: false
+    socket-timeout: 0
+    ssl-enabled: false
+    ssl-invalid-host-name-allowed: false
+    threads-allowed-to-block-for-connection-multiplier: 5
+
+sign:
+  secretKey: agilines0823.
+
+srm:
+  server:
+    url: http://srm-qa.agilines.cn:82/api/v1/ithinkdt-srm-scm-new/pub/materialSync/sync.do
+  connection:
+    connection-request-timeout: 3000
+    connect-timeout: 3000
+    read-timeout: 3000
+
+xxl:
+  job:
+    accessToken:
+    admin:
+      addresses: http://xxl-job:8080/xxl-job-admin
+    executor:
+      appname: pcp-bom-backend
+      address:
+      ip:
+      port: 9999
+      logpath: test/logs/
+      logretentiondays: 3

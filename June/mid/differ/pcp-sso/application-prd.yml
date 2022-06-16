@@ -1,0 +1,112 @@
+server:
+    port: 8080
+mybatis-plus:
+  config-location: classpath:conf/dao/sql-map-config.xml
+  mapper-locations: classpath*:conf/dao/sqlmap/*.xml,classpath*:mapper/*.xml
+  type-aliases-package: com.ithinkdt.pcp.admin.entity.*
+spring:
+    auth:
+      clientId: srm
+      secret: 123456
+      token_validity_hours: 720
+      refresh_token_validity_hours: 720
+    redis:
+      database: 1
+      sentinel:
+          master: mymaster
+          nodes: 10.164.9.48:26379,10.164.9.49:26379,10.164.9.50:26379
+      password: O21$AgiLines&HF
+      port: 36379
+    application:
+        name: ithinkdt-auth-server
+    profiles:
+        active: dev
+    freemarker:
+       cache: false
+       suffix: .html
+       content-type: text/html
+       enabled: true
+       template-loader-path: classpath:/templates/
+       charset: UTF-8
+    datasource:
+      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+      minIdle: 5
+      validationQuery: SELECT 'x'
+      initialSize: 1
+      maxWait: 60000
+      poolPreparedStatements: true
+      filters: stat,wall,slf4j
+      type: com.alibaba.druid.pool.DruidDataSource
+      maxPoolPreparedStatementPerConnectionSize: 20
+      testOnBorrow: false
+      testWhileIdle: true
+      minEvictableIdleTimeMillis: 300000
+      timeBetweenEvictionRunsMillis: 60000
+      testOnReturn: false
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      maxActive: 20
+      url: jdbc:mysql://10.164.9.99:3306/auth_server?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone = GMT
+      password: O21$AgiLines%HF
+      username: root
+    resources:
+      static-locations: classpath:/static/
+feign:
+  connect:
+    timeout:
+      millis: 30000
+  httpclient:
+    enabled: true
+  hystrix:
+    enabled: true
+  read:
+    timeout:
+      millis: 50000
+ribbon:
+  ConnectTimeout: 30000
+  MaxAutoRetries: 1
+  MaxAutoRetriesNextServer: 2
+  ReadTimeout: 50000
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          strategy: SEMAPHORE
+          thread:
+            timeoutInMilliseconds: 10000.0
+        timeout:
+          enabled: false
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+        defaultZone: "http://eureka-0.eureka:8500/eureka/,http://eureka-1.eureka:8500/eureka/,http://eureka-2.eureka:8500/eureka/"
+  instance:
+    prefer-ip-address: true
+ithinkdt:
+  default:
+    domain: upower
+    redirect_uri: https://pcp.upower.com/
+  security:
+    token_holder_on: true
+    keepLogin: always
+    social:
+      - icon: /img/psd.png
+        icon_alive: /img/alive-psd.png
+        title: 深迪SSO登录
+        auth_type: Author2.0
+        auth_kind: ithinkdtsso
+        client_id: pcp
+        client_secret: 123456
+        user-authorization-uri: https://sso-upower.agilines.com/pub/oauth2/authorize?response_type=code&client_id=pcp&redirect_uri=[REDIRECT_URI]&scope=all&domain=[DOMAIN]&state=[STATE]
+        access_token_uri: https://sso-upower.agilines.com/pub/oauth2/access_token?grant_type=authorization_code&client_id=pcp&client_secret=123456&code=[CODE]
+        user_info_uri: https://sso-upower.agilines.com/cli/full_user_info?access_token=[ACCESS_TOKEN]&domain=[DOMAIN]
+        logout_uri: https://sso-upower.agilines.com/cli/logout?access_token=[ACCESS_TOKEN]
+#        auth_kind: ithinkdt_pwd
+#        script_url: /js/ssoPwLogin.js
+#        script_config: new psLogin({id:"[AUTH_KIND]",url:"[REDIRECT_URI]"});
+#        url: https://sso-upower.agilines.com/pub/pwd_login
+  oauth:
+    config:
+      url: https://sso-upower.agilines.com/oauth/config

@@ -1,0 +1,36 @@
+server:
+  port: 8080
+
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://eureka-0.eureka:8080/eureka/
+  instance:
+    prefer-ip-address: true
+
+spring:
+  application:
+    name: pcp-library
+  main:
+    allow-bean-definition-overriding: true
+  data:
+    mongodb:
+      uri: mongodb://admin:5kghoFUjImS6Wyor@10.164.9.234:27011,10.164.9.234:27012,10.164.9.234:27013/pcp_library
+
+library:
+  mongodb:
+    trans-open: true #是否开启mongo事务配置 false:关闭 true:开启
+
+management:
+  endpoints:
+    web:
+      base-path: /
+  health:
+    defaults:
+      enabled: false
+endpoints:
+  enabled: false
+  health:
+    enabled: true

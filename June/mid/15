@@ -1,0 +1,138 @@
+```后端服务
+pcp-backend
+pcp-bom-backend
+pcp-bpm
+pcp-change
+pcp-common
+pcp-config
+pcp-gateway2
+pcp-index
+pcp-library
+pcp-nc
+pcp-sso
+pcp-uc
+pcp-variant
+pdf-service
+project
+xxl-job
+```
+
+
+
+前端服务
+
+```
+pcp-front
+pcp-bom-front
+pcp-change-front   (新增  添加环境)
+pcp-config-front
+pcp-library-front
+pcp-main-front
+pcp-pmp-front
+pcp-render-front
+pcp-rules-front
+pcp-uc-front
+```
+
+pcp-change（完成）
+
+```
+read:
+    timeout:
+      millis: 15000
+
+ribbon:
+  ConnectTimeout: 30000
+  MaxAutoRetries: 1
+  MaxAutoRetriesNextServer: 2
+  ReadTimeout: 15000
+```
+
+
+
+pcp-config（完成）
+
+```
+spring
+	profiles:
+    	active: prd
+
+
+#xxl Job
+xxl:
+  job:
+    admin:
+      # 生产环境请替换xxl-job地址
+      addresses: http://xxl-job:8080/xxl-job-admin
+    executor:
+      appname: pcp-config-job
+      logretentiondays: 3
+```
+
+
+
+pcp-index（完成）
+
+```
+es:
+  log:
+    indexPattern: business-log-*
+    appName: biz-log-project_uat
+    log-urls: 10.164.9.73:9200,10.164.9.74:9200,10.164.9.75:9200  (hai)
+    log-user: elastic
+    log-password: iThinkDT.com
+```
+
+
+
+pcp-sso（完成）
+
+```
+ithinkdt:
+  default:
+    domain: upower
+    redirect_uri: https://pcp-uat.agilines.com/
+  security:
+    token_holder_on: true
+    keepLogin: always
+    social:
+      - icon: /img/psd.png
+        icon_alive: /img/alive-psd.png
+        title: 用户名密码登录
+        auth_type: Author2.0
+        auth_kind: ithinkdtsso
+        client_id: pcp
+        client_secret: 123456
+        user-authorization-uri: https://sso-uat.agilines.com/pub/oauth2/authorize?response_type=code&client_id=pcp&redirect_uri=[REDIRECT_URI]&scope=all&domain=[DOMAIN]&state=[STATE]
+        access_token_uri: https://sso-uat.agilines.com/pub/oauth2/access_token?grant_type=authorization_code&client_id=pcp&client_secret=123456&code=[CODE]
+        user_info_uri: https://sso-uat.agilines.com/cli/full_user_info?access_token=[ACCESS_TOKEN]&domain=[DOMAIN]
+        logout_uri: https://sso-uat.agilines.com/cli/logout?access_token=[ACCESS_TOKEN]
+        #auth_kind: ithinkdt_pwd
+        #script_url: /js/ssoPwLogin.js
+        #script_config: new psLogin({id:"[AUTH_KIND]",url:"[REDIRECT_URI]"});
+        #url: http://npcp-uat.noboauto.com:85/pub/pwd_login
+
+```
+
+
+
+pcp-uc
+
+```
+ithinkdt:
+	default:
+    domain: upower
+```
+
+
+
+project（完成）
+
+```
+spring:
+  data:
+      mongodb:
+        uri: mongodb://pcp_project:5kghoFUjImS6Wyor@10.164.9.234:27011,10.164.9.234:27012,10.164.9.234:27013/pcp_project
+  profiles:
+```
+

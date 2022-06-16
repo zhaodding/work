@@ -1,0 +1,61 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: pcp-index
+  data:
+    neo4j:
+      uri: bolt://10.164.9.234:7687
+      username: neo4j
+      password: agilines
+  datasource:
+    #注意： MySQL连接驱动是8.0，要使用以下类作为驱动类
+    driver-class-name: com.mysql.jdbc.Driver
+    password: dasda32GSADfd
+    username: root
+    url: jdbc:mysql://10.164.9.234:3306/pcp_common?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone = GMT
+
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://eureka-0.eureka:8080/eureka/
+  instance:
+    prefer-ip-address: true
+
+
+es:
+  urls: 10.50.60.28:9200
+  user: elastic
+  password: eFwRvKowdtCq8anq
+  biz:
+    map: "{'Task': 'upower_uat_project_task_search', 'Issue': 'upower_uat_issue_search', 'CADPart': 'upower_uat_cadpart_search', 'epart': 'upower_uat_epart_search', 'compare': 'upower_uat_compare_search'}"
+  log:
+    indexPattern: business-log-*
+    appName: biz-log-project_uat
+    log-urls: 10.164.9.73:9200,10.164.9.74:9200,10.164.9.75:9200
+    log-user: elastic
+    log-password: iThinkDT.com
+
+mq:
+  name-server: mq-namesrv-0.mq-namesrv:9876
+  consumer:
+    group: GRAPH-CONSUMER
+    topic: PCP-C-GRAPH_MODEL
+  log:
+    group: g1
+    topic: CANAL_MYSQL
+logging:
+  level:
+    org:
+      springframework:
+        data:
+          neo4j:
+            cypher: trace
+
+mybatis:
+  type-aliases-package: com.agilines.data.index.bean
+  mapper-locations: classpath*:mapper/*.xml
+
+

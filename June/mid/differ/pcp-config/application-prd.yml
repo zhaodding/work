@@ -1,0 +1,157 @@
+feign:
+  connect:
+    timeout:
+      millis: 3000
+  httpclient:
+    enabled: true
+  hystrix:
+    enabled: true
+  read:
+    timeout:
+      millis: 5000
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          strategy: SEMAPHORE
+          thread:
+            timeoutInMilliseconds: 10000.0
+        timeout:
+          enabled: false
+i18n:
+  cookie:
+    maxage: 31536000
+    name: locale
+  default:
+    locale: zh_CN
+mybatis-plus:
+  config-location: classpath:conf/dao/sql-map-config.xml
+  mapper-locations: classpath*:conf/dao/sqlmap/*.xml,classpath*:mapper/*.xml
+  type-aliases-package: com.ithinkdt.pcp.config.admin.entity.*,com.ithinkdt.pcp.config.cax.entity.*,com.ithinkdt.pcp.config.bom.entity.*
+ribbon:
+  ConnectTimeout: 3000
+  MaxAutoRetries: 1
+  MaxAutoRetriesNextServer: 2
+  ReadTimeout: 5000
+server:
+  port: 9005
+websocket:
+  port: 9006
+spring:
+  redis:
+    sentinel:
+      master: mymaster
+      nodes: 10.164.9.48:26379,10.164.9.49:26379,10.164.9.50:26379
+    database: 15
+    #hostName: 10.0.48.38
+    port: 6379
+    password: O21$AgiLines&HF
+    maxIdle: 300
+    maxTotal: 1000
+    maxWaitMillis: 1000
+    minEvictableIdleTimeMillis: 300000
+    numTestsPerEvictionRun: 1024
+    testOnBorrow: true
+    testWhileIdle: true
+    timeBetweenEvictionRunsMillis: 30000
+    timeout: 10000
+  application:
+    name: pcp-config
+  auth:
+    clientId: client_1
+    secret: 123456
+  datasource:
+    password: O21$AgiLines%HF
+    username: root
+    url: jdbc:mysql://10.164.9.99:3306/pcp_conf?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+    driver-class-name: com.mysql.jdbc.Driver
+    filters: stat,wall,slf4j
+    initialSize: 1
+    maxActive: 20
+    maxPoolPreparedStatementPerConnectionSize: 20
+    maxWait: 60000
+    minEvictableIdleTimeMillis: 300000
+    minIdle: 5
+    poolPreparedStatements: true
+    testOnBorrow: false
+    testOnReturn: false
+    testWhileIdle: true
+    timeBetweenEvictionRunsMillis: 60000
+    type: com.alibaba.druid.pool.DruidDataSource
+    validationQuery: SELECT 'x'
+  freemarker:
+    allow-request-override: false
+    cache: true
+    charset: UTF-8
+    check-template-location: true
+    content-type: text/html
+    expose-request-attributes: false
+    expose-session-attributes: false
+    expose-spring-macro-helpers: false
+    prefer-file-system-access: false
+    suffix: .ftl
+    template-loader-path: classpath:/templates/
+  mvc:
+    throw-exception-if-no-handler-found: true
+# 产品的应用名称
+ithinkdt:
+  app:
+    name: pcp-config
+  security:
+    social:
+      - icon: wechat.png
+        icon_alive: alive-wechat.png
+        title: 深迪SSO登录
+        auth_type: Author2.0
+        auth_kind: ithinkdtsso
+        client_id: pga
+        client_secret: 123456
+        url: 'https://pcp.upower.com/api/v1/pcp/pub/ssologin/callback'
+        ssoUrl: 'https://pcp.upower.com/api/v1/pcp/pub/ssologin'
+        user-authorization-uri: https://sso-upower.agilines.com/pub/oauth2/authorize?response_type=code&client_id=[CLIENT_ID]&redirect_uri=[REDIRECT_URI]&scope=all&domain=[DOMAIN]
+        access_token_uri: https://sso-upower.agilines.com/pub/oauth2/access_token?grant_type=authorization_code&client_id=[CLIENT_ID]&client_secret=[CLIENT_SECRET]&code=[CODE]
+        user_info_uri: https://sso-upower.agilines.com/cli/full_user_info?access_token=[ACCESS_TOKEN]&domain=[DOMAIN]
+  oauth2:
+    default:
+      enable: true
+  oauth:
+    config:
+      no-user-redirect: https://uc-upower.agilines.com/api/v1/ithinkdt-user-center/pub/register_user?profile=[PROFILE]&redirectUri=[REDIRECT_URI]&self_redirect=true
+application:
+  code: pcp
+
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://eureka-0.eureka:8500/eureka/,http://eureka-1.eureka:8500/eureka/,http://eureka-2.eureka:8500/eureka/
+  instance:
+    prefer-ip-address: true
+logging:
+  level:
+    dao:
+      com:
+        ithinkdt: INFO
+    com:
+      ithinkdt:
+        uc:
+          api:
+            controller: INFO
+    io:
+      swagger:
+        models:
+          parameters:
+            AbstractSerializableParameter: ERROR
+    springfox:
+      documentation:
+        spring:
+          web:
+            readers:
+              operation: INFO
+    org:
+      springframework:
+        cloud:
+          netflix: INFO

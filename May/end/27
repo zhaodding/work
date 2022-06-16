@@ -1,0 +1,18 @@
+
+
+refire uat  版本对齐
+
+pcp-history中数据库密码没有渲染   需要在config中填写db_type  mysql
+                   雨燕   jenkins
+generator-tools    0       0
+pcp-agi            0      9
+pcp-libs           2+4
+pcp-libs-front     0+0
+pcp-oc-website     0+9
+pcp-oc-service     2+3
+pcp-oc-engine      0+7
+stc-commom        0+0
+website-client    0+0
+cmdb
+pms
+web-backend
